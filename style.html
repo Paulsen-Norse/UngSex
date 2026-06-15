@@ -20,11 +20,17 @@
     }
 
     .page {
-      padding-top: 64px;
+      padding-top: 180px;
       padding-bottom: 96px;
     }
 
-    @media (max-width: 809px) { .page { padding-top: 40px; padding-bottom: 64px; } }
+    @media (min-width: 1200px) {
+      .container {
+        padding-inline: max(120px, calc((100vw - 960px) / 2));
+      }
+    }
+
+    @media (max-width: 809px) { .page { padding-top: 156px; padding-bottom: 64px; } }
 
     .page-header {
       margin-bottom: 64px;
@@ -247,8 +253,8 @@
         <div class="swatch" data-color="#1a0a40">
           <div class="swatch-color" style="background:#1a0a40"></div>
         </div>
-        <div class="swatch" data-color="#6c657c">
-          <div class="swatch-color" style="background:#6c657c"></div>
+        <div class="swatch" data-color="#625c71">
+          <div class="swatch-color" style="background:#625c71"></div>
         </div>
         <div class="swatch" data-color="#d7dde3">
           <div class="swatch-color" style="background:#d7dde3"></div>
