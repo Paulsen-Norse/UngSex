@@ -59,7 +59,7 @@
       border-radius: 8px;
       padding: 8px 14px;
       font-size: 12px;
-      font-family: monospace;
+      font-family: 'Nunito', sans-serif;
       cursor: pointer;
       backdrop-filter: blur(8px);
       user-select: none;
