@@ -10,6 +10,133 @@ body {
   color: #fff;
 }
 
+/* ============================================================
+   Design tokens
+   ============================================================ */
+:root {
+  /* Primary */
+  --color-primary:        #7c3aed;
+  --color-primary-dark:   #5b21b5;
+
+  /* Tones */
+  --color-tone-1:         #d7dde3;
+  --color-tone-2:         #6c657c;
+  --color-tone-3:         #1a0a40;
+
+  /* Surfaces */
+  --color-surface-1:      #f1fbf9;
+  --color-surface-2:      #cbfaf0;
+
+  /* Typography — <810 */
+  --font-h1:     52px;
+  --lh-h1:       56px;
+  --font-h2:     34px;
+  --lh-h2:       38px;
+  --font-h3:     24px;
+  --lh-h3:       28px;
+  --font-body:   18px;
+  --lh-body:     26px;
+}
+
+@media (min-width: 810px) {
+  :root {
+    --font-h1:   68px;
+    --lh-h1:     72px;
+    --font-h2:   42px;
+    --lh-h2:     46px;
+    --font-h3:   28px;
+    --lh-h3:     32px;
+    --font-body: 20px;
+    --lh-body:   28px;
+  }
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+.h1 {
+  font-size: var(--font-h1);
+  line-height: var(--lh-h1);
+  font-weight: 900;
+  color: var(--color-tone-3);
+}
+
+.h2 {
+  font-size: var(--font-h2);
+  line-height: var(--lh-h2);
+  font-weight: 900;
+  color: var(--color-tone-3);
+}
+
+.h3 {
+  font-size: var(--font-h3);
+  line-height: var(--lh-h3);
+  font-weight: 900;
+  color: var(--color-tone-3);
+}
+
+.body-text {
+  font-size: var(--font-body);
+  line-height: var(--lh-body);
+  font-weight: 600;
+  color: var(--color-tone-2);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  color: #fff;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.btn:hover {
+  background: var(--color-primary-dark);
+}
+
+.btn--sm {
+  height: 40px;
+  padding-inline: 16px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.btn--md {
+  height: 48px;
+  padding-inline: 20px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.btn--lg {
+  height: 56px;
+  padding-inline: 24px;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.btn svg,
+.btn img {
+  flex-shrink: 0;
+}
+
+.btn--sm svg,
+.btn--sm img { width: 20px; height: 20px; }
+.btn--md svg,
+.btn--md img { width: 24px; height: 24px; }
+.btn--lg svg,
+.btn--lg img { width: 24px; height: 24px; }
+
 /* Grid system
    .container        — full content width with responsive margins
    .container--narrow — centered, max 720px (body copy, cards)
