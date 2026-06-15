@@ -19,19 +19,18 @@
     }
     #grid-overlay-inner {
       width: 100%;
-      max-width: 1392px;
-      padding-inline: 96px;
+      padding-inline: 16px;
       display: grid;
       grid-template-columns: repeat(${COLUMNS}, 1fr);
       gap: ${GUTTER}px;
       height: 100%;
       box-sizing: border-box;
     }
-    @media (max-width: 1199px) {
-      #grid-overlay-inner {
-        max-width: none;
-        padding-inline: 32px;
-      }
+    @media (min-width: 810px) {
+      #grid-overlay-inner { padding-inline: 32px; }
+    }
+    @media (min-width: 1200px) {
+      #grid-overlay-inner { padding-inline: max(96px, calc((100vw - 1200px) / 2)); }
     }
     @media (max-width: 809px) {
       #grid-overlay-inner {
