@@ -10,6 +10,56 @@ body {
   color: #fff;
 }
 
+/* Grid system
+   .container        — full content width with responsive margins
+   .container--narrow — centered, max 720px (body copy, cards)
+   .container--nav    — centered, max 560px (nav/menu)
+*/
+.container {
+  width: 100%;
+  padding-inline: 16px;
+}
+
+@media (min-width: 810px) {
+  .container {
+    padding-inline: 32px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1392px;
+    margin-inline: auto;
+    padding-inline: 96px;
+  }
+}
+
+.container--narrow {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@media (min-width: 810px) {
+  .container--narrow {
+    padding-inline: 0;
+  }
+}
+
+.container--nav {
+  width: 100%;
+  max-width: 560px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@media (min-width: 810px) {
+  .container--nav {
+    padding-inline: 0;
+  }
+}
+
 .hero {
   position: relative;
   width: 100%;
