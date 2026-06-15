@@ -8,28 +8,160 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700&display=swap">
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: var(--color-surface-1);
+    }
+
+    .hero {
+      background: var(--color-surface-2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-top: 96px;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 720px;
+      padding-inline: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .hero-content h1 { margin-bottom: 16px; }
+    .hero-content p { margin-bottom: 32px; }
+
+    .hero-body {
+      font-size: var(--font-body);
+      line-height: var(--lh-body);
+      font-weight: 500;
+      color: var(--color-tone-2);
+    }
+
+    .hero-person-wrap {
+      position: relative;
+      margin-top: 48px;
+      width: 512px;
+      max-width: 80%;
+    }
+
+    .hero-person {
+      display: block;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-icon {
+      position: absolute;
+      z-index: 1;
+      animation: heroFloat 4s ease-in-out infinite;
+    }
+
+    .hero-icon--1 { width: 152px; top: 18%; left: 0%; animation-duration: 4s;   animation-delay: 0s; }
+    .hero-icon--2 { width: 160px; top: 28%; right: -12%; animation-duration: 5s;   animation-delay: -1.5s; }
+    .hero-icon--3 { width: 136px; top: 55%; left: -18%; animation-duration: 3.5s; animation-delay: -0.8s; }
+
+    @media (max-width: 809px) {
+      .hero-person-wrap { width: 360px; max-width: none; }
+      .hero-icon--1 { width: 96px; left: 5%; }
+      .hero-icon--2 { width: 100px; right: -8%; }
+      .hero-icon--3 { width: 84px; left: -13%; }
+    }
+
+
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50%       { transform: translateY(-14px) rotate(3deg); }
+    }
+
+    .side-by-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      padding-top: 156px;
+      padding-bottom: 96px;
+    }
+
+    @media (max-width: 809px) {
+      .side-by-side { padding-top: 96px; padding-bottom: 64px; }
+    }
+
+    .side-by-side__text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .side-by-side__text h2 {
+      margin-bottom: 16px;
+    }
+
+    .side-by-side__text p {
+      margin-bottom: 32px;
+    }
+
+    .side-by-side__image img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 64px;
+      display: block;
+    }
+
+    @media (max-width: 809px) {
+      .side-by-side {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding-top: 96px;
+        padding-bottom: 64px;
+      }
+      .side-by-side__image { order: -1; }
+      .side-by-side__image img {
+        aspect-ratio: unset;
+        height: 100vw;
+        max-height: 480px;
+        object-position: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <section class="hero">
-    <div class="floating-icons">
-      <div class="icon icon-1">⚡</div>
-      <div class="icon icon-2">🎯</div>
-      <div class="icon icon-3">🌟</div>
-      <div class="icon icon-4">🔥</div>
-      <div class="icon icon-5">💡</div>
-      <div class="icon icon-6">🎨</div>
-    </div>
-    <div class="hero-image">
-      <img src="hero.jpg" alt="Hero image" />
-    </div>
     <div class="hero-content">
-      <h1>Your headline here</h1>
-      <p>Your subtext here.</p>
+      <h1>The raw denim scene was better before</h1>
+      <p class="hero-body">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
+      <a href="#" class="btn btn--lg">Button</a>
+    </div>
+    <div class="hero-person-wrap">
+      <img class="hero-icon hero-icon--1" src="assets/floating_icons/broken-heart-10730226.svg" alt="" />
+      <img class="hero-icon hero-icon--2" src="assets/floating_icons/catch-love-10730254.svg" alt="" />
+      <img class="hero-icon hero-icon--3" src="assets/floating_icons/heart-10730221.svg" alt="" />
+      <img class="hero-person" src="assets/img/hero-person.png" alt="" />
     </div>
   </section>
 
-  <script src="main.js"></script>
+  <div class="container">
+    <div class="side-by-side">
+      <div class="side-by-side__text">
+        <h2>The raw denim scene was better before</h2>
+        <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
+        <a href="#" class="btn btn--md">Button</a>
+      </div>
+      <div class="side-by-side__image">
+        <img src="assets/img/condom.png" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="icons.js"></script>
   <script src="grid-overlay.js"></script>
 </body>
 </html>
