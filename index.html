@@ -11,6 +11,34 @@
 </head>
 <body>
 
+  <nav class="nav" id="nav">
+    <div class="nav__surface">
+      <div class="nav__bar">
+        <a href="/" class="nav__logo">UngSex</a>
+        <div class="nav__desktop">
+          <a href="#" class="nav__link">Om oss</a>
+          <a href="#" class="btn btn--sm">
+            <hg-icon name="login-01" size="20"></hg-icon>
+            Lærere
+          </a>
+        </div>
+        <button class="nav__toggle" aria-label="Open menu" id="nav-toggle">
+          <span class="nav__toggle-bar"></span>
+          <span class="nav__toggle-bar"></span>
+        </button>
+      </div>
+      <div class="nav__mobile-wrap">
+        <div class="nav__mobile-menu" id="nav-mobile-menu">
+          <a href="#" class="nav__link">Om oss</a>
+          <a href="#" class="btn btn--sm">
+            <hg-icon name="login-01" size="20"></hg-icon>
+            Lærere
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   <section class="hero">
     <div class="hero-content">
       <h1>The raw denim scene was better before</h1>
@@ -40,5 +68,24 @@
 
   <script type="module" src="icons.js"></script>
   <script src="grid-overlay.js"></script>
+  <script>
+    (function () {
+      const nav = document.getElementById('nav');
+      const toggle = document.getElementById('nav-toggle');
+
+      function closeMenu() {
+        nav.classList.remove('is-open');
+        toggle.innerHTML = '<hg-icon name="menu-09" size="24"></hg-icon>';
+      }
+
+      toggle.addEventListener('click', function () {
+        nav.classList.toggle('is-open');
+      });
+
+      window.addEventListener('resize', function () {
+        if (window.innerWidth >= 810) closeMenu();
+      });
+    })();
+  </script>
 </body>
 </html>
