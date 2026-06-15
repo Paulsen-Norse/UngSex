@@ -81,6 +81,18 @@ h3, .h3 {
   color: var(--color-tone-3);
 }
 
+hg-icon {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+hg-icon:not(:defined) {
+  width: var(--hg-icon-size, 24px);
+  height: var(--hg-icon-size, 24px);
+}
+
+.btn hg-icon:not(:defined) { --hg-icon-size: 20px; }
+
 .body-text {
   font-size: var(--font-body);
   line-height: var(--lh-body);
