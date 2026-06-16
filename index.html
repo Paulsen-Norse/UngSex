@@ -31,7 +31,14 @@
     .hero-content p,
     .hero-content .btn { animation-delay: 0ms; }
 
-    .hero-icon { animation: heroFadeUp .6s cubic-bezier(.25,.46,.45,.94) both; animation-delay: 300ms; }
+    .hero-icon {
+      animation: heroFadeUp .6s cubic-bezier(.25,.46,.45,.94) 300ms both,
+                 heroFloat 4s ease-in-out 900ms infinite;
+    }
+    .hero-icon--1 { animation-duration: .6s, 4s;   animation-delay: 300ms, 900ms; }
+    .hero-icon--2 { animation-duration: .6s, 5s;   animation-delay: 300ms, -600ms; }
+    .hero-icon--3 { animation-duration: .6s, 3.5s; animation-delay: 300ms, -200ms; }
+
   </style>
 </head>
 <body>
@@ -81,7 +88,17 @@
     <div class="hero-content">
       <h1>Kniting artisanal risograph print</h1>
       <p class="hero-body">My fixie is more lo-fi than your vinyl. Found this free-range flannel at a vinyl and I haven't been the same since!</p>
-      <a href="#" class="btn btn--lg">Button</a>
+      <a href="#" class="btn btn--lg btn--arrow">
+        Button
+        <span class="btn-icon-wrap">
+          <svg class="btn-icon" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="btn-icon__line" d="M1.5 6h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <g class="btn-icon__chevron">
+              <path d="M3.5 2l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </g>
+          </svg>
+        </span>
+      </a>
     </div>
     <div class="hero-person-wrap">
       <img class="hero-icon hero-icon--1" src="assets/floating_icons/broken-heart-10730226.svg" alt="" />
@@ -96,7 +113,17 @@
       <div class="side-by-side__text">
         <h2>The raw denim scene was better before</h2>
         <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-        <a href="#" class="btn btn--md">Button</a>
+        <a href="#" class="btn btn--md btn--arrow">
+          Button
+          <span class="btn-icon-wrap">
+            <svg class="btn-icon" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="btn-icon__line" d="M1.5 6h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <g class="btn-icon__chevron">
+                <path d="M3.5 2l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </g>
+            </svg>
+          </span>
+        </a>
       </div>
       <div class="side-by-side__image">
         <img src="assets/img/condom.png" alt="" />

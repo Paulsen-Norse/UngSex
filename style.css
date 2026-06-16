@@ -145,6 +145,7 @@ hg-icon:not(:defined) {
   font-size: 20px;
   line-height: 28px;
   border-radius: 28px;
+  gap: 8px;
 }
 
 .btn svg,
@@ -158,6 +159,31 @@ hg-icon:not(:defined) {
 .btn--md img { width: 24px; height: 24px; }
 .btn--lg svg,
 .btn--lg img { width: 24px; height: 24px; }
+
+.btn--arrow .btn-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-inline-start: -2.5px;
+  margin-inline-end: -3.5px;
+}
+.btn--arrow .btn-icon {
+  width: 12px !important;
+  height: 12px !important;
+  display: block;
+  overflow: visible;
+}
+.btn--arrow .btn-icon__line {
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.btn--arrow:hover .btn-icon__line { opacity: 1; }
+.btn--arrow .btn-icon__chevron {
+  transition: translate 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.btn--arrow:hover .btn-icon__chevron { translate: 3px 0; }
+.btn--sm.btn--arrow .btn-icon path { stroke-width: 1.67px; }
 
 /* ============================================================
    Grid / Container

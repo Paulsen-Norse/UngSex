@@ -54,7 +54,6 @@
       overflow: hidden;
       aspect-ratio: 16 / 9;
       background: var(--color-surface-3);
-      cursor: pointer;
     }
 
     .video-wrap img {
@@ -73,15 +72,18 @@
     }
 
     .video-play__btn {
-      width: 72px;
-      height: 72px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       background: rgba(255,255,255,.9);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--color-tone-3);
+      cursor: pointer;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
     }
+    .video-play__btn:hover { transform: scale(1.08); }
 
     /* Teacher section */
     .teacher-section {
@@ -125,10 +127,12 @@
       text-decoration: none;
     }
 
-    .teacher-card .link:hover { text-decoration: underline; }
+    .teacher-card .link.btn--arrow { gap: 6px; }
+    .teacher-card .link:hover { text-decoration: none; color: color-mix(in srgb, var(--color-primary) 92%, black); }
 
     @media (max-width: 809px) {
       .video-wrap { border-radius: 56px; }
+      .video-play__btn { width: 64px; height: 64px; }
       .video-section { padding-top: 48px; padding-bottom: 48px; }
       .teacher-section { padding-top: 64px; padding-bottom: 64px; }
       .teacher-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -186,7 +190,17 @@
       <div class="container--narrow">
         <h1>Snakk om sex</h1>
         <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-        <a href="#" class="btn btn--lg">Start modul</a>
+        <a href="#" class="btn btn--lg btn--arrow">
+          Start modul
+          <span class="btn-icon-wrap">
+            <svg class="btn-icon" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="btn-icon__line" d="M1.5 6h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <g class="btn-icon__chevron">
+                <path d="M3.5 2l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </g>
+            </svg>
+          </span>
+        </a>
       </div>
     </div>
   </section>
@@ -211,12 +225,12 @@
         <div class="teacher-card pg-anim" style="--stagger-i: 1">
           <h3>Temapresentasjon</h3>
           <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="link">Last ned PPTX</a>
+          <a href="#" class="link btn--arrow">Last ned PPTX<span class="btn-icon-wrap"><svg class="btn-icon" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="btn-icon__line" d="M1.5 6h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><g class="btn-icon__chevron"><path d="M3.5 2l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg></span></a>
         </div>
         <div class="teacher-card pg-anim" style="--stagger-i: 2">
           <h3>Refleksjonsoppgaver</h3>
           <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="link">Start Ordsky</a>
+          <a href="#" class="link btn--arrow">Start Ordsky<span class="btn-icon-wrap"><svg class="btn-icon" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="btn-icon__line" d="M1.5 6h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><g class="btn-icon__chevron"><path d="M3.5 2l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg></span></a>
         </div>
       </div>
     </div>
