@@ -294,6 +294,7 @@ hg-icon:not(:defined) {
   border: none;
   cursor: pointer;
   padding: 0;
+  margin-left: auto;
   width: 40px;
   height: 40px;
   flex-direction: column;
@@ -512,12 +513,25 @@ hg-icon:not(:defined) {
 .side-by-side__text h2 { margin-bottom: 16px; }
 .side-by-side__text p  { margin-bottom: 32px; }
 
+.side-by-side__image {
+  border-radius: 64px;
+  overflow: hidden;
+}
+
 .side-by-side__image img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: 64px;
   display: block;
+  transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+}
+
+.side-by-side__image {
+  cursor: pointer;
+}
+
+.side-by-side__image:hover img {
+  transform: scale(1.04);
 }
 
 .side-by-side--flip .side-by-side__image { order: -1; }
@@ -541,13 +555,12 @@ hg-icon:not(:defined) {
     padding-top: 96px;
     padding-bottom: 96px;
   }
-  .side-by-side__image { order: -1; }
+  .side-by-side__image { order: -1; border-radius: 56px; }
   .side-by-side__image img {
     aspect-ratio: unset;
     height: 100vw;
     max-height: 480px;
     object-position: center;
-    border-radius: 56px;
   }
 }
 

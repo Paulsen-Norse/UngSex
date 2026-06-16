@@ -8,6 +8,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700&display=swap">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .pg-anim {
+      opacity: 0;
+      translate: 0 24px;
+      transition: opacity .5s cubic-bezier(.25,.46,.45,.94),
+                  translate .5s cubic-bezier(.25,.46,.45,.94);
+      transition-delay: calc(var(--stagger-i, 0) * 120ms);
+    }
+    .pg-anim.is-visible { opacity: 1; translate: 0 0; }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; translate: 0 20px; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+    .hero-content h1,
+    .hero-content p,
+    .hero-content .btn {
+      animation: heroFadeUp .6s cubic-bezier(.25,.46,.45,.94) both;
+    }
+    .hero-content h1,
+    .hero-content p,
+    .hero-content .btn { animation-delay: 0ms; }
+
+    .hero-icon { animation: heroFadeUp .6s cubic-bezier(.25,.46,.45,.94) both; animation-delay: 300ms; }
+  </style>
 </head>
 <body>
 
@@ -20,7 +45,7 @@
             <a href="/page-one.html" class="nav__link">Page One</a>
             <a href="/article.html" class="nav__link">Article</a>
           </div>
-          <a href="#" class="btn btn--sm">
+          <a href="/style" class="btn btn--sm">
             <hg-icon name="login-01" size="20"></hg-icon>
             Lærere
           </a>
@@ -34,7 +59,7 @@
         <div class="nav__mobile-menu" id="nav-mobile-menu">
           <a href="/page-one.html" class="nav__link">Page One</a>
           <a href="/article.html" class="nav__link">Article</a>
-          <a href="#" class="btn btn--sm">
+          <a href="/style" class="btn btn--sm">
             <hg-icon name="login-01" size="20"></hg-icon>
             Lærere
           </a>
@@ -136,6 +161,35 @@
 
       window.addEventListener('resize', function () {
         if (window.innerWidth >= 810) closeMenu();
+      });
+    })();
+  </script>
+  <script>
+    (function () {
+var els = Array.from(document.querySelectorAll(
+        '.side-by-side__text, .side-by-side__image, .sponsors, .footer__inner'
+      ));
+
+      // stagger the two halves of each side-by-side
+      document.querySelectorAll('.side-by-side').forEach(function (row) {
+        Array.from(row.children).forEach(function (el, i) {
+          el.style.setProperty('--stagger-i', i);
+        });
+      });
+
+      els.forEach(function (el) { el.classList.add('pg-anim'); });
+
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.05 });
+
+      requestAnimationFrame(function () {
+        els.forEach(function (el) {
+          if (el.getBoundingClientRect().bottom <= 0) { el.classList.add('is-visible'); }
+          else { obs.observe(el); }
+        });
       });
     })();
   </script>

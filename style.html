@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700&display=swap">
-  <link rel="stylesheet" href="style.css">
-  <script type="module" src="icons.js"></script>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/icons.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -188,16 +188,11 @@
     .pg-anim {
       opacity: 0;
       translate: 0 24px;
-      transition: opacity .8s cubic-bezier(.22,1,.36,1),
-                  translate .8s cubic-bezier(.22,1,.36,1);
+      transition: opacity .5s cubic-bezier(.25,.46,.45,.94),
+                  translate .5s cubic-bezier(.25,.46,.45,.94);
+      transition-delay: calc(var(--stagger-i, 0) * 120ms);
     }
-
     .pg-anim.is-visible { opacity: 1; translate: 0 0; }
-    .section-title.pg-anim.is-visible { transition-delay: 0s; }
-    .section-title + .pg-anim.is-visible { transition-delay: .2s; }
-    .type-grid > div.pg-anim.is-visible { transition-delay: calc(.2s + var(--stagger-i, 0) * .15s); }
-    .color-swatches .swatch.pg-anim.is-visible { transition-delay: calc(.3s + var(--stagger-i, 0) * .08s); }
-    .btn-grid .btn.pg-anim.is-visible { transition-delay: calc(.3s + var(--stagger-i, 0) * .08s); }
   </style>
 </head>
 <body>
@@ -211,7 +206,7 @@
             <a href="/page-one.html" class="nav__link">Page One</a>
             <a href="/article.html" class="nav__link">Article</a>
           </div>
-          <a href="#" class="btn btn--sm">
+          <a href="/style" class="btn btn--sm">
             <hg-icon name="login-01" size="20"></hg-icon>
             Lærere
           </a>
@@ -225,7 +220,7 @@
         <div class="nav__mobile-menu" id="nav-mobile-menu">
           <a href="/page-one.html" class="nav__link">Page One</a>
           <a href="/article.html" class="nav__link">Article</a>
-          <a href="#" class="btn btn--sm">
+          <a href="/style" class="btn btn--sm">
             <hg-icon name="login-01" size="20"></hg-icon>
             Lærere
           </a>
@@ -435,7 +430,7 @@
       document.querySelectorAll('.btn-grid .btn').forEach(function (el, i) { el.style.setProperty('--stagger-i', i); });
 
       var els = Array.from(document.querySelectorAll(
-        '.page-header, .section-title, .color-swatches .swatch, .type-grid > div, .btn-grid .btn'
+        '.page-header, .section-title, .color-swatches .swatch, .type-grid > div, .btn-grid .btn, .footer__inner'
       ));
       els.forEach(function (el) { el.classList.add('pg-anim'); });
 
