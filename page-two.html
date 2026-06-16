@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page One — UngSex</title>
+  <title>Snakk om sex — UngSex</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700&display=swap">
@@ -19,10 +19,18 @@
       animation: heroFadeUp .6s cubic-bezier(.25,.46,.45,.94) both;
       animation-delay: 0ms;
     }
-    .page-hero__icon {
+    .page-hero .btn {
       animation: heroFadeUp .6s cubic-bezier(.25,.46,.45,.94) both;
-      animation-delay: 300ms;
+      animation-delay: 0ms;
     }
+    .page-hero__icon {
+      animation: heroFadeUp .6s cubic-bezier(.25,.46,.45,.94) 300ms both,
+                 heroFloat 4s ease-in-out 900ms infinite;
+    }
+    .page-hero__icon--1 { animation-duration: .6s, 5s; animation-delay: 300ms, 900ms; top: -76px; }
+    .page-hero__icon--2 { animation-duration: .6s, 4s; animation-delay: 300ms, -600ms; bottom: -96px; }
+
+    .page-hero .container--narrow p { margin-bottom: 32px; }
 
     .pg-anim {
       opacity: 0;
@@ -32,6 +40,99 @@
       transition-delay: calc(var(--stagger-i, 0) * 120ms);
     }
     .pg-anim.is-visible { opacity: 1; translate: 0 0; }
+
+    /* Video section */
+    .video-section {
+      background: var(--color-surface-1);
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    .video-wrap {
+      position: relative;
+      border-radius: 64px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      background: var(--color-surface-3);
+      cursor: pointer;
+    }
+
+    .video-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-play__btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-tone-3);
+    }
+
+    /* Teacher section */
+    .teacher-section {
+      padding-top: 96px;
+      padding-bottom: 96px;
+    }
+
+    .teacher-section h2 {
+      margin-bottom: 32px;
+    }
+
+    .teacher-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .teacher-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--color-tone-3);
+    }
+
+    .teacher-card p {
+      margin-bottom: 8px;
+    }
+
+    .teacher-section h2 {
+      padding-bottom: 32px;
+      border-bottom: 1.5px solid #D7DDE3;
+    }
+
+    .teacher-card .link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 48px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    .teacher-card .link:hover { text-decoration: underline; }
+
+    @media (max-width: 809px) {
+      .video-wrap { border-radius: 56px; }
+      .video-section { padding-top: 48px; padding-bottom: 48px; }
+      .teacher-section { padding-top: 64px; padding-bottom: 64px; }
+      .teacher-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
   </style>
 </head>
 <body>
@@ -59,6 +160,7 @@
       <div class="nav__mobile-wrap">
         <div class="nav__mobile-menu">
           <a href="/page-one.html" class="nav__link">Page One</a>
+          <a href="/page-two.html" class="nav__link">Page Two</a>
           <a href="/article.html" class="nav__link">Article</a>
           <a href="/style" class="btn btn--sm">
             <hg-icon name="login-01" size="20"></hg-icon>
@@ -82,105 +184,41 @@
       <img class="page-hero__icon page-hero__icon--1" src="assets/floating_icons/find-10730247.svg" alt="" />
       <img class="page-hero__icon page-hero__icon--2" src="assets/floating_icons/heart-10730221.svg" alt="" />
       <div class="container--narrow">
-        <h1>Velkommen!</h1>
+        <h1>Snakk om sex</h1>
         <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
+        <a href="#" class="btn btn--lg">Start modul</a>
       </div>
     </div>
   </section>
 
-  <section class="topics">
+  <section class="video-section">
     <div class="container">
-
-      <div class="side-by-side">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Snakk om sex</h2>
-          <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
+      <div class="video-wrap pg-anim">
+        <img src="assets/img/article_img_hero.png" alt="" />
+        <div class="video-play">
+          <div class="video-play__btn">
+            <hg-icon name="play" size="32"></hg-icon>
+          </div>
         </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
       </div>
+    </div>
+  </section>
 
-      <div class="side-by-side side-by-side--flip">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Kroppen</h2>
+  <section class="teacher-section">
+    <div class="container">
+      <h2 class="pg-anim" style="--stagger-i: 0">Til deg som lærer</h2>
+      <div class="teacher-grid">
+        <div class="teacher-card pg-anim" style="--stagger-i: 1">
+          <h3>Temapresentasjon</h3>
           <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
+          <a href="#" class="link">Last ned PPTX</a>
         </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
-      </div>
-
-      <div class="side-by-side">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Grenser og samtykke</h2>
+        <div class="teacher-card pg-anim" style="--stagger-i: 2">
+          <h3>Refleksjonsoppgaver</h3>
           <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
+          <a href="#" class="link">Start Ordsky</a>
         </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
       </div>
-
-      <div class="side-by-side side-by-side--flip">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Porno</h2>
-          <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
-        </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
-      </div>
-
-      <div class="side-by-side">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Kjærlighet</h2>
-          <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
-        </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
-      </div>
-
-      <div class="side-by-side side-by-side--flip">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Cybersex</h2>
-          <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
-        </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
-      </div>
-
-      <div class="side-by-side">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Prevensjon og seksuell helse</h2>
-          <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
-        </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
-      </div>
-
-      <div class="side-by-side side-by-side--flip">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Skeiv sex</h2>
-          <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
-        </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
-      </div>
-
-      <div class="side-by-side">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Overgrep og hjelp</h2>
-          <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
-        </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
-      </div>
-
-      <div class="side-by-side side-by-side--flip">
-        <div class="side-by-side__text pg-anim" style="--stagger-i: 0">
-          <h2>Sexpress</h2>
-          <p class="body-text">Before it was cool, I was knitting heirloom microbrewery? Honestly upcycled film camera changed my entire perspective. You probably haven't heard of my single-origin risograph print?</p>
-          <a href="#" class="btn btn--md">Les mer</a>
-        </div>
-        <div class="side-by-side__image pg-anim" style="--stagger-i: 1"><img src="assets/img/condom.png" alt="" /></div>
-      </div>
-
     </div>
   </section>
 
@@ -225,7 +263,7 @@
   <script>
     (function () {
       var els = Array.from(document.querySelectorAll(
-        '.side-by-side__text, .side-by-side__image, .footer__inner'
+        '.video-wrap, .teacher-section h2, .teacher-card, .footer__inner'
       ));
 
       var obs = new IntersectionObserver(function (entries) {

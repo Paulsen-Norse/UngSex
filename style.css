@@ -223,8 +223,7 @@ hg-icon:not(:defined) {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  width: calc(100% - 48px);
-  max-width: 560px;
+  width: max-content;
 }
 
 .nav__surface {
@@ -241,6 +240,7 @@ hg-icon:not(:defined) {
   height: 56px;
   display: flex;
   align-items: center;
+  gap: 48px;
   padding-left: 20px;
   padding-right: 8px;
 }
@@ -249,8 +249,6 @@ hg-icon:not(:defined) {
   display: flex;
   align-items: center;
   gap: 0;
-  flex: 1;
-  justify-content: center;
 }
 
 .nav__logo {
@@ -263,8 +261,7 @@ hg-icon:not(:defined) {
 .nav__desktop {
   display: flex;
   align-items: center;
-  gap: 0;
-  flex: 1;
+  gap: 48px;
 }
 
 .nav__desktop .btn {
@@ -358,7 +355,7 @@ hg-icon:not(:defined) {
 
 
 @media (max-width: 809px) {
-  .nav { max-width: none; }
+  .nav { width: calc(100% - 48px); }
   .nav__bar { padding-right: 12px; }
   .nav__desktop { display: none; }
   .nav__toggle  { display: flex; }
