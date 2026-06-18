@@ -42,6 +42,7 @@
     .ks__icon:nth-of-type(2) { animation-duration: .6s, 4s;   animation-delay: 300ms, -800ms;  top: 8%;    right: 4%; }
     .ks__icon:nth-of-type(3) { animation-duration: .6s, 6s;   animation-delay: 300ms, -400ms;  bottom: 8%; left: 3%; }
     .ks__icon:nth-of-type(4) { animation-duration: .6s, 3.5s; animation-delay: 300ms, -1200ms; bottom: 6%; right: 4%; }
+    .ks__icon:nth-of-type(5) { animation-duration: .6s, 4.5s; animation-delay: 300ms, -200ms;  top: 40%;   right: 3%; }
 
     /* ─── Screen system ─── */
     .screen {
@@ -56,6 +57,85 @@
       opacity: 1;
       pointer-events: auto;
     }
+
+    /* ════════════════════════════
+       SCREEN: modul
+    ════════════════════════════ */
+    .modul {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .modul__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modul__logo {
+      font-size: var(--font-h2);
+      line-height: var(--lh-h2);
+      font-weight: 700;
+      color: var(--color-tone-3);
+    }
+
+    .modul__title {
+      font-size: var(--font-h1);
+      line-height: var(--lh-h1);
+      font-weight: 800;
+      color: var(--color-tone-3);
+    }
+
+    .modul__actions {
+      display: flex;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .big-btn hg-icon { filter: drop-shadow(0 2px 0 rgba(0,0,0,.2)); }
+    .big-btn { text-shadow: 0 2px 0 rgba(0,0,0,.2); }
+
+    .big-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 196px;
+      height: 96px;
+      border: none;
+      border-radius: 32px;
+      background: var(--color-primary);
+      color: #fff;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 0 #5C24B3;
+      transform: translateY(0);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-image 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .big-btn:hover {
+      background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
+      box-shadow: 0 8px 0 #4A1A9A;
+    }
+    .big-btn:active {
+      transform: translateY(6px);
+      box-shadow: 0 2px 0 #5C24B3;
+    }
+
+    .big-btn--hjemme {
+      background: #009386;
+      box-shadow: 0 8px 0 #006B62;
+    }
+    .big-btn--hjemme:hover { box-shadow: 0 8px 0 #005550; }
+    .big-btn--hjemme:active { box-shadow: 0 2px 0 #006B62; }
 
     /* ════════════════════════════
        SCREEN: pin
@@ -382,6 +462,27 @@
   <img class="ks__icon" src="assets/floating_icons/love-birds-10730212.svg" alt="" />
   <img class="ks__icon" src="assets/floating_icons/broken-heart-10730226.svg" alt="" />
   <img class="ks__icon" src="assets/floating_icons/catch-love-10730254.svg" alt="" />
+  <img class="ks__icon" src="assets/floating_icons/love-chat-10730248.svg" alt="" />
+
+  <!-- ── Screen: modul ── -->
+  <div class="screen" data-screen="modul">
+    <div class="modul">
+      <div class="modul__content">
+        <span class="modul__logo">UngSex</span>
+        <span class="modul__title">Snakk om sex</span>
+        <div class="modul__actions">
+          <button class="big-btn" onclick="showScreen('pin')">
+            <hg-icon name="user-group-03" size="32"></hg-icon>
+            Klasserom
+          </button>
+          <button class="big-btn big-btn--hjemme">
+            <hg-icon name="home-07" size="32"></hg-icon>
+            Hjemme
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ── Screen: pin ── -->
   <div class="screen" data-screen="pin">
@@ -478,10 +579,7 @@
       }
     }
 
-    showScreen('pin');
-    requestAnimationFrame(function() {
-      document.querySelector('.ks__content').classList.add('ks--loaded');
-    });
+    showScreen('modul');
   </script>
 </body>
 </html>
