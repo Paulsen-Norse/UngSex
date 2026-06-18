@@ -43,29 +43,25 @@
     .ks__icon:nth-of-type(3) { animation-duration: .6s, 6s;   animation-delay: 300ms, -400ms;  bottom: 8%; left: 3%; }
     .ks__icon:nth-of-type(4) { animation-duration: .6s, 3.5s; animation-delay: 300ms, -1200ms; bottom: 6%; right: 4%; }
     .ks__icon:nth-of-type(5) { animation-duration: .6s, 4.5s; animation-delay: 300ms, -200ms;  top: 40%;   right: 3%; }
+    body.show-intro .ks__icon,
+    body.show-question .ks__icon,
+    body.show-question-tf .ks__icon,
+    body.show-question-img .ks__icon { display: none; }
 
     /* ─── Screen system ─── */
-    .screen {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .3s cubic-bezier(.25,.46,.45,.94);
-    }
-    .screen--active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .screen { display: none; }
+    .screen--active { display: contents; }
 
     /* ════════════════════════════
        SCREEN: modul
     ════════════════════════════ */
     .modul {
+      position: fixed;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
+      z-index: 2;
     }
 
     .modul__content {
@@ -141,14 +137,14 @@
        SCREEN: pin
     ════════════════════════════ */
     .ks__top {
-      position: absolute;
+      position: fixed;
       top: 24px;
       left: 24px;
       right: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      z-index: 1;
+      z-index: 3;
     }
 
     .ks__players {
@@ -194,8 +190,9 @@
     }
 
     .ks__content {
-      position: absolute;
+      position: fixed;
       inset: 0;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -325,14 +322,14 @@
        SCREEN: intro
     ════════════════════════════ */
     .intro-top {
-      position: absolute;
+      position: fixed;
       top: 24px;
       left: 24px;
       right: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      z-index: 1;
+      z-index: 3;
       pointer-events: none;
     }
     .intro-top > * { pointer-events: auto; }
@@ -350,8 +347,8 @@
     }
 
     .intro-back {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       background: rgba(255,255,255,.8);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -368,6 +365,30 @@
       user-select: none;
     }
     .intro-back:hover { transform: scale(1.08); }
+
+    .fullscreen-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(0,0,0,.12);
+      border-radius: 50%;
+      box-shadow: 0 8px 8px -4px rgba(0,0,0,.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-tone-3);
+      cursor: pointer;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .fullscreen-btn:hover { transform: scale(1.08); }
 
     .intro-next {
       height: 44px;
@@ -398,8 +419,9 @@
     }
 
     .intro-video {
-      position: absolute;
+      position: fixed;
       inset: 96px;
+      z-index: 2;
       border-radius: 64px;
       overflow: hidden;
       background: var(--color-surface-3);
@@ -441,6 +463,200 @@
       transition: transform .4s cubic-bezier(.25,.46,.45,.94);
     }
     .intro-video__btn:hover { transform: scale(1.08); }
+
+    /* ════════════════════════════
+       SCREEN: question
+    ════════════════════════════ */
+    .question-top {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 3;
+    }
+
+    .question-layout {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .question-text {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 96px 48px 64px;
+    }
+
+    .question-text h2 {
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 800;
+      color: var(--color-tone-3);
+      line-height: 1.2;
+      margin: 0;
+      text-align: center;
+    }
+
+    .question-answers {
+      flex-shrink: 0;
+      padding: 0 48px 96px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 196px 196px;
+      gap: 16px;
+    }
+
+    .answer-tile {
+      text-shadow: 0 2px 0 rgba(0,0,0,.2);
+      border-radius: 32px;
+      padding: 24px;
+      max-height: 196px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-weight: 700;
+      line-height: 1.15;
+      cursor: pointer;
+      border: none;
+      position: relative;
+      transition: transform .08s ease, filter .08s ease, opacity .4s ease;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .answer-tile:hover  { filter: brightness(.95); }
+    .answer-tile:active { transform: scale(.97); }
+
+    /* Reveal state */
+    .question--revealed .answer-tile:not(.answer-tile--correct) { opacity: 0.3; }
+    .question--revealed .answer-tile:hover { filter: none; }
+    .question--revealed .answer-tile:active { transform: none; }
+
+    .answer-check {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      color: #fff;
+      opacity: 0;
+      transition: opacity .4s ease;
+      line-height: 0;
+    }
+    .question--revealed .answer-tile--correct .answer-check { opacity: 1; }
+
+    .answer-tile--text-lg { font-size: 56px; }
+    .answer-tile--text-md { font-size: 48px; }
+    .answer-tile--text-sm { font-size: 32px; }
+
+    .answer-tile--a { background: #1d4ed8; color: #fff; }
+    .answer-tile--b { background: #16a34a; color: #fff; }
+    .answer-tile--c { background: #ca8a04; color: #fff; }
+    .answer-tile--d { background: #dc2626; color: #fff; }
+
+    /* ════════════════════════════
+       SCREEN: question-tf
+    ════════════════════════════ */
+    .tf-answers {
+      flex-shrink: 0;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 408px;
+    }
+    .tf-answers .answer-tile { max-height: none; }
+
+    @media (max-width: 810px) {
+      .tf-answers { grid-template-columns: 1fr; grid-template-rows: 156px 156px; }
+    }
+
+    /* ════════════════════════════
+       SCREEN: question-img
+    ════════════════════════════ */
+    .img-top {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 3;
+    }
+
+    .img-layout {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      padding: 96px 48px 96px;
+      gap: 32px;
+    }
+
+    .img-left {
+      flex: 1;
+      min-width: 0;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .img-reveal-wrap {
+      position: relative;
+      border-radius: 32px;
+      overflow: hidden;
+      max-width: 100%;
+      max-height: calc(100vh - 128px);
+      box-shadow: 0 32px 64px -16px rgba(0,0,0,.18);
+    }
+
+    .img-reveal-wrap img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: calc(100vh - 128px);
+    }
+
+    .img-grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+    }
+
+    .img-cell {
+      background: var(--color-tone-3);
+      transition: opacity .4s ease;
+    }
+    .img-cell.revealed { opacity: 0; }
+
+    .img-right {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-self: stretch;
+    }
+
+    .img-right .answer-tile {
+      flex: 1;
+      max-height: none;
+    }
+
+    @media (min-width: 811px) and (max-width: 1199px) {
+      .question-text    { padding-inline: 64px; }
+      .question-answers { padding-inline: 64px; }
+    }
+
+    @media (min-width: 1200px) {
+      .question-text    { padding-inline: 96px; }
+      .question-answers { padding-inline: 96px; }
+    }
+
+    @media (max-width: 810px) {
+      .question-answers { grid-template-columns: 1fr; grid-template-rows: repeat(4, 156px); }
+    }
   </style>
 </head>
 <body>
@@ -557,7 +773,7 @@
         <hg-icon name="arrow-left-01" size="24"></hg-icon>
       </button>
       <span class="intro-title">Intro video</span>
-      <button class="intro-next" onclick="showScreen('pin')">Neste</button>
+      <button class="intro-next" onclick="showScreen('question')">Neste</button>
     </div>
     <div class="intro-video">
       <img src="assets/img/article_img_hero.png" alt="Intro video" />
@@ -569,17 +785,157 @@
     </div>
   </div>
 
+  <!-- ── Screen: question ── -->
+  <div class="screen" data-screen="question">
+    <div class="question-top">
+      <button class="ks__next" id="question-neste" onclick="showScreen('question-tf')">Neste</button>
+    </div>
+    <div class="question-layout">
+      <div class="question-text">
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h2>
+      </div>
+      <div class="question-answers">
+        <button class="answer-tile answer-tile--a" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem</button>
+        <button class="answer-tile answer-tile--b answer-tile--correct" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem ipsum dolor sit amet</button>
+        <button class="answer-tile answer-tile--c" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod</button>
+        <button class="answer-tile answer-tile--d" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Ipsum</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen: question-tf ── -->
+  <div class="screen" data-screen="question-tf">
+    <div class="question-top">
+      <button class="ks__next" onclick="showScreen('question-img')">Neste</button>
+    </div>
+    <div class="question-layout">
+      <div class="question-text">
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h2>
+      </div>
+      <div class="question-answers tf-answers">
+        <button class="answer-tile answer-tile--b answer-tile--correct" onclick="revealTf()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Sant</button>
+        <button class="answer-tile answer-tile--d" onclick="revealTf()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Usant</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen: question-img ── -->
+  <div class="screen" data-screen="question-img">
+    <div class="img-top">
+      <button class="ks__next" onclick="showScreen('question')">Neste</button>
+    </div>
+    <div class="img-layout">
+      <div class="img-left">
+        <div class="img-reveal-wrap">
+          <img src="assets/img/img 4.png" alt="" />
+          <div class="img-grid" id="img-grid"></div>
+        </div>
+      </div>
+      <div class="img-right">
+        <button class="answer-tile answer-tile--a answer-tile--correct" onclick="revealImg()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Ada Hegerberg</button>
+        <button class="answer-tile answer-tile--b" onclick="revealImg()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Andrine Hegerberg</button>
+        <button class="answer-tile answer-tile--c" onclick="revealImg()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Guro Reiten</button>
+        <button class="answer-tile answer-tile--d" onclick="revealImg()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Sophie Roman Haug</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="fullscreen-btn" id="fullscreen-btn" aria-label="Fullskjerm">
+    <hg-icon name="arrow-expand-01" size="24"></hg-icon>
+  </button>
+
   <script>
     function showScreen(name) {
       document.querySelectorAll('.screen').forEach(function(s) {
         s.classList.toggle('screen--active', s.dataset.screen === name);
       });
+      document.body.classList.toggle('show-intro', name === 'intro');
+      document.body.classList.toggle('show-question', name === 'question');
+      document.body.classList.toggle('show-question-tf', name === 'question-tf');
+      document.body.classList.toggle('show-question-img', name === 'question-img');
+      document.querySelectorAll('.question-layout, .img-layout').forEach(function(l) { l.classList.remove('question--revealed'); });
+      if (name === 'question' || name === 'question-tf') {
+        document.querySelectorAll('[data-screen="' + name + '"] .answer-tile').forEach(function(tile) {
+          var len = tile.textContent.trim().length;
+          tile.classList.remove('answer-tile--text-lg', 'answer-tile--text-md', 'answer-tile--text-sm');
+          tile.classList.add(len <= 20 ? 'answer-tile--text-lg' : len <= 50 ? 'answer-tile--text-md' : 'answer-tile--text-sm');
+        });
+      }
+      if (name === 'question-img') {
+        buildImgGrid();
+        document.querySelectorAll('[data-screen="question-img"] .answer-tile').forEach(function(tile) {
+          var len = tile.textContent.trim().length;
+          tile.classList.remove('answer-tile--text-lg', 'answer-tile--text-md', 'answer-tile--text-sm');
+          tile.classList.add(len <= 20 ? 'answer-tile--text-lg' : len <= 50 ? 'answer-tile--text-md' : 'answer-tile--text-sm');
+        });
+      }
       if (name === 'pin') {
         document.querySelector('.ks__content').classList.add('ks--loaded');
       }
     }
 
+    function buildImgGrid() {
+      var grid = document.getElementById('img-grid');
+      grid.innerHTML = '';
+      var total = 64, batchSize = Math.round(total * 0.1);
+
+      // build all cells covered, shuffle order for random reveals
+      var cells = [];
+      for (var i = 0; i < total; i++) {
+        var cell = document.createElement('div');
+        cell.className = 'img-cell';
+        grid.appendChild(cell);
+        cells.push(cell);
+      }
+      for (var i = cells.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = cells[i]; cells[i] = cells[j]; cells[j] = tmp;
+      }
+
+      // reveal first 10% immediately
+      cells.splice(0, batchSize).forEach(function(c) { c.classList.add('revealed'); });
+
+      // attach click to img-left: reveal next 10% each click
+      var imgLeft = document.querySelector('[data-screen="question-img"] .img-left');
+      imgLeft.onclick = function() {
+        if (!cells.length) return;
+        cells.splice(0, batchSize).forEach(function(c) { c.classList.add('revealed'); });
+      };
+    }
+
+    function revealAnswer() {
+      document.querySelector('[data-screen="question"] .question-layout').classList.add('question--revealed');
+    }
+
+    function revealTf() {
+      document.querySelector('[data-screen="question-tf"] .question-layout').classList.add('question--revealed');
+    }
+
+    function revealImg() {
+      document.querySelector('[data-screen="question-img"] .img-layout').classList.add('question--revealed');
+    }
+
     showScreen('modul');
+
+    (function() {
+      var btn = document.getElementById('fullscreen-btn');
+      function updateIcon() {
+        var isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        btn.innerHTML = isFs
+          ? '<hg-icon name="arrow-shrink-02" size="24"></hg-icon>'
+          : '<hg-icon name="arrow-expand-01" size="24"></hg-icon>';
+        btn.setAttribute('aria-label', isFs ? 'Avslutt fullskjerm' : 'Fullskjerm');
+      }
+      btn.addEventListener('click', function() {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          (document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen).call(document.documentElement);
+        } else {
+          (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        }
+      });
+      document.addEventListener('fullscreenchange', updateIcon);
+      document.addEventListener('webkitfullscreenchange', updateIcon);
+    })();
   </script>
 </body>
 </html>
