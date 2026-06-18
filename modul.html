@@ -119,11 +119,15 @@
       cursor: pointer;
       box-shadow: 0 8px 0 #5C24B3;
       transform: translateY(0);
-      transition: transform 0.08s ease, box-shadow 0.08s ease;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-image 0.15s;
       -webkit-user-select: none;
       user-select: none;
     }
 
+    .big-btn:hover {
+      background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
+      box-shadow: 0 8px 0 #4A1A9A;
+    }
     .big-btn:active {
       transform: translateY(6px);
       box-shadow: 0 2px 0 #5C24B3;
@@ -133,6 +137,7 @@
       background: #009386;
       box-shadow: 0 8px 0 #006B62;
     }
+    .big-btn--hjemme:hover { box-shadow: 0 8px 0 #005550; }
     .big-btn--hjemme:active {
       box-shadow: 0 2px 0 #006B62;
     }
@@ -161,7 +166,7 @@
       <span class="big-screen__logo">UngSex</span>
       <span class="big-screen__subtitle">Snakk om sex</span>
       <div class="big-screen__actions">
-        <button class="big-btn" onclick="location.href='/klasserom.html'">
+        <button class="big-btn" onclick="location.href='/snakk_om_sex.html'">
           <hg-icon name="user-group-03" size="32"></hg-icon>
           Klasserom
         </button>

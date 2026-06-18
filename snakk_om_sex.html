@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Klasserom — UngSex</title>
+  <title>Snakk om sex — UngSex</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap">
@@ -14,16 +14,15 @@
 
     body { overflow: hidden; height: 100dvh; }
 
+    /* ─── Shared background ─── */
     .ks {
-      position: relative;
-      width: 100%;
-      height: 100dvh;
-      overflow: hidden;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
     }
-
     .ks .hero-mesh { position: absolute; inset: 0; }
 
-    /* Floating icons */
+    /* ─── Floating icons ─── */
     @keyframes ksFadeUp {
       from { opacity: 0; translate: 0 20px; }
       to   { opacity: 1; translate: 0 0; }
@@ -39,21 +38,37 @@
       animation: ksFadeUp .6s cubic-bezier(.25,.46,.45,.94) 300ms both,
                  heroFloat 4s ease-in-out 900ms infinite;
     }
-    .ks__icon:nth-of-type(1) { animation-duration: .6s, 5s;   animation-delay: 300ms, 0ms;     top: 6%;     left: 4%; }
-    .ks__icon:nth-of-type(2) { animation-duration: .6s, 4s;   animation-delay: 300ms, -800ms;  top: 8%;     right: 4%; }
-    .ks__icon:nth-of-type(3) { animation-duration: .6s, 6s;   animation-delay: 300ms, -400ms;  bottom: 8%;  left: 3%; }
-    .ks__icon:nth-of-type(4) { animation-duration: .6s, 3.5s; animation-delay: 300ms, -1200ms; bottom: 6%;  right: 4%; }
+    .ks__icon:nth-of-type(1) { animation-duration: .6s, 5s;   animation-delay: 300ms, 0ms;     top: 6%;    left: 4%; }
+    .ks__icon:nth-of-type(2) { animation-duration: .6s, 4s;   animation-delay: 300ms, -800ms;  top: 8%;    right: 4%; }
+    .ks__icon:nth-of-type(3) { animation-duration: .6s, 6s;   animation-delay: 300ms, -400ms;  bottom: 8%; left: 3%; }
+    .ks__icon:nth-of-type(4) { animation-duration: .6s, 3.5s; animation-delay: 300ms, -1200ms; bottom: 6%; right: 4%; }
 
-    /* Top chrome */
-    .ks__top {
+    /* ─── Screen system ─── */
+    .screen {
       position: fixed;
+      inset: 0;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s cubic-bezier(.25,.46,.45,.94);
+    }
+    .screen--active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ════════════════════════════
+       SCREEN: pin
+    ════════════════════════════ */
+    .ks__top {
+      position: absolute;
       top: 24px;
       left: 24px;
       right: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      z-index: 3;
+      z-index: 1;
     }
 
     .ks__players {
@@ -85,20 +100,22 @@
       color: #fff;
       cursor: pointer;
       transform: translateY(0);
-      transition: transform 0.08s ease, box-shadow 0.08s ease;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-image 0.15s;
       -webkit-user-select: none;
       user-select: none;
+    }
+    .ks__next:hover {
+      background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
+      box-shadow: 0 4px 0 #4A1A9A;
     }
     .ks__next:active {
       transform: translateY(2px);
       box-shadow: 0 2px 0 #5C24B3;
     }
 
-    /* Center content */
     .ks__content {
-      position: fixed;
+      position: absolute;
       inset: 0;
-      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -114,9 +131,7 @@
       transition: opacity .6s cubic-bezier(.25,.46,.45,.94);
     }
     .ks--loaded .ks__header,
-    .ks--loaded .ks__join {
-      opacity: 1;
-    }
+    .ks--loaded .ks__join { opacity: 1; }
 
     .ks__header {
       display: flex;
@@ -167,7 +182,6 @@
       50%       { transform: scale(1);   opacity: 1; }
     }
 
-    /* Join section */
     .ks__join {
       width: clamp(762px, calc(100vw - 48px), 960px);
       display: flex;
@@ -182,7 +196,6 @@
       gap: 12px;
     }
 
-    /* Shared glass surface */
     .ks__url,
     .ks__pin,
     .ks__qr {
@@ -227,10 +240,132 @@
       width: 100%;
       height: 100%;
     }
+
+    /* ════════════════════════════
+       SCREEN: intro
+    ════════════════════════════ */
+    .intro-top {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .intro-top > * { pointer-events: auto; }
+
+    .intro-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: var(--font-h3);
+      line-height: var(--lh-h3);
+      font-weight: 700;
+      color: var(--color-tone-3);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .intro-back {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(0,0,0,.12);
+      border-radius: 50%;
+      box-shadow: 0 8px 8px -4px rgba(0,0,0,.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-tone-3);
+      cursor: pointer;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .intro-back:hover { transform: scale(1.08); }
+
+    .intro-next {
+      height: 44px;
+      padding-inline: 24px;
+      background: var(--color-primary);
+      border: none;
+      border-radius: 20px;
+      position: relative;
+      top: -2px;
+      box-shadow: 0 4px 0 #5C24B3;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transform: translateY(0);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-image 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .intro-next:hover {
+      background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
+      box-shadow: 0 4px 0 #4A1A9A;
+    }
+    .intro-next:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #5C24B3;
+    }
+
+    .intro-video {
+      position: absolute;
+      inset: 96px;
+      border-radius: 64px;
+      overflow: hidden;
+      background: var(--color-surface-3);
+      box-shadow: 0 32px 64px -16px rgba(0,0,0,.18);
+      border: 8px solid #fff;
+      outline: 1px solid rgba(0,0,0,.08);
+    }
+
+    .intro-video video,
+    .intro-video img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .intro-video__play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .intro-video__btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 8px -4px rgba(0,0,0,.06);
+      border: 0.5px solid rgba(0,0,0,.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-tone-3);
+      cursor: pointer;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+    }
+    .intro-video__btn:hover { transform: scale(1.08); }
   </style>
 </head>
 <body>
 
+  <!-- Shared background -->
   <div class="ks">
     <div class="hero-mesh" aria-hidden="true">
       <div class="hero-mesh__blurred">
@@ -242,49 +377,46 @@
     </div>
   </div>
 
+  <!-- Floating icons (shared) -->
   <img class="ks__icon" src="assets/floating_icons/heart-10730221.svg" alt="" />
   <img class="ks__icon" src="assets/floating_icons/love-birds-10730212.svg" alt="" />
   <img class="ks__icon" src="assets/floating_icons/broken-heart-10730226.svg" alt="" />
   <img class="ks__icon" src="assets/floating_icons/catch-love-10730254.svg" alt="" />
 
-  <div class="ks__top">
-    <div class="ks__players">
-      <hg-icon name="user-multiple-02" size="20"></hg-icon>
-      <span>0</span>
-    </div>
-    <button class="ks__next">Neste</button>
-  </div>
-
-  <div class="ks__content">
-    <div class="ks__header">
-      <span class="ks__logo">UngSex</span>
-      <span class="ks__title">Snakk om sex</span>
-      <span class="ks__waiting">Venter på spillere</span>
-      <div class="loader-dots">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  <!-- ── Screen: pin ── -->
+  <div class="screen" data-screen="pin">
+    <div class="ks__top">
+      <div class="ks__players">
+        <hg-icon name="user-multiple-02" size="20"></hg-icon>
+        <span>0</span>
       </div>
+      <button class="ks__next" onclick="showScreen('intro')">Start</button>
     </div>
-    <div class="ks__join">
-      <div class="ks__join-left">
-        <div class="ks__url">ungsex.no/<strong>snakk</strong></div>
-        <div class="ks__pin">1&nbsp;2&nbsp;3&nbsp;4</div>
+    <div class="ks__content">
+      <div class="ks__header">
+        <span class="ks__logo">UngSex</span>
+        <span class="ks__title">Snakk om sex</span>
+        <span class="ks__waiting">Venter på spillere</span>
+        <div class="loader-dots">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
       </div>
+      <div class="ks__join">
+        <div class="ks__join-left">
+          <div class="ks__url">ungsex.no/<strong>snakk</strong></div>
+          <div class="ks__pin">1&nbsp;2&nbsp;3&nbsp;4</div>
+        </div>
         <div class="ks__qr">
-          <!-- Placeholder QR -->
           <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Top-left finder -->
             <rect x="1" y="1" width="7" height="7" fill="#1a0a40"/>
             <rect x="2" y="2" width="5" height="5" fill="white"/>
             <rect x="3" y="3" width="3" height="3" fill="#1a0a40"/>
-            <!-- Top-right finder -->
             <rect x="13" y="1" width="7" height="7" fill="#1a0a40"/>
             <rect x="14" y="2" width="5" height="5" fill="white"/>
             <rect x="15" y="3" width="3" height="3" fill="#1a0a40"/>
-            <!-- Bottom-left finder -->
             <rect x="1" y="13" width="7" height="7" fill="#1a0a40"/>
             <rect x="2" y="14" width="5" height="5" fill="white"/>
             <rect x="3" y="15" width="3" height="3" fill="#1a0a40"/>
-            <!-- Data dots -->
             <rect x="9" y="1" width="1" height="1" fill="#1a0a40"/>
             <rect x="11" y="1" width="1" height="1" fill="#1a0a40"/>
             <rect x="9" y="3" width="2" height="1" fill="#1a0a40"/>
@@ -312,12 +444,42 @@
             <rect x="19" y="17" width="1" height="1" fill="#1a0a40"/>
             <rect x="17" y="19" width="2" height="1" fill="#1a0a40"/>
           </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen: intro ── -->
+  <div class="screen" data-screen="intro">
+    <div class="intro-top">
+      <button class="intro-back" onclick="showScreen('pin')" aria-label="Tilbake">
+        <hg-icon name="arrow-left-01" size="24"></hg-icon>
+      </button>
+      <span class="intro-title">Intro video</span>
+      <button class="intro-next" onclick="showScreen('pin')">Neste</button>
+    </div>
+    <div class="intro-video">
+      <img src="assets/img/article_img_hero.png" alt="Intro video" />
+      <div class="intro-video__play">
+        <button class="intro-video__btn" aria-label="Spill av">
+          <hg-icon name="play" size="32"></hg-icon>
+        </button>
       </div>
     </div>
   </div>
 
   <script>
-    requestAnimationFrame(function () {
+    function showScreen(name) {
+      document.querySelectorAll('.screen').forEach(function(s) {
+        s.classList.toggle('screen--active', s.dataset.screen === name);
+      });
+      if (name === 'pin') {
+        document.querySelector('.ks__content').classList.add('ks--loaded');
+      }
+    }
+
+    showScreen('pin');
+    requestAnimationFrame(function() {
       document.querySelector('.ks__content').classList.add('ks--loaded');
     });
   </script>
