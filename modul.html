@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snakk om sex — UngSex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="icons.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      overflow: hidden;
+      height: 100dvh;
+    }
+
+    .big-screen {
+      position: relative;
+      width: 100%;
+      height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Reuse hero mesh */
+    .big-screen .hero-mesh {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* Floating icons */
+    .big-screen__icon {
+      position: absolute;
+      width: 156px;
+      height: 156px;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes bsFadeUp {
+      from { opacity: 0; translate: 0 20px; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+
+    .big-screen__icon {
+      animation: bsFadeUp .6s cubic-bezier(.25,.46,.45,.94) 300ms both,
+                 heroFloat 4s ease-in-out 900ms infinite;
+    }
+    .big-screen__icon:nth-of-type(1) { animation-duration: .6s, 5s;   animation-delay: 300ms, 0ms;     top: 8%;  left: 10%; }
+    .big-screen__icon:nth-of-type(2) { animation-duration: .6s, 4s;   animation-delay: 300ms, -800ms;  top: 12%; right: 16%; }
+    .big-screen__icon:nth-of-type(3) { animation-duration: .6s, 6s;   animation-delay: 300ms, -400ms;  bottom: 14%; left: 5%; }
+    .big-screen__icon:nth-of-type(4) { animation-duration: .6s, 3.5s; animation-delay: 300ms, -1200ms; bottom: 10%; right: 12%; }
+    .big-screen__icon:nth-of-type(5) { animation-duration: .6s, 4.5s; animation-delay: 300ms, -200ms;  top: 40%; right: 3%; }
+
+    /* Center content */
+    .big-screen__content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      animation: bsFadeUp .6s cubic-bezier(.25,.46,.45,.94) both;
+    }
+
+    .big-screen__logo {
+      font-size: var(--font-h2);
+      line-height: var(--lh-h2);
+      font-weight: 700;
+      color: var(--color-tone-3);
+    }
+
+    .big-screen__subtitle {
+      font-size: var(--font-h1);
+      line-height: var(--lh-h1);
+      font-weight: 800;
+      color: var(--color-tone-3);
+    }
+
+    .big-screen__actions {
+      display: flex;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .big-btn hg-icon {
+      filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.2));
+    }
+
+    .big-btn span,
+    .big-btn {
+      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .big-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 196px;
+      height: 96px;
+      border: none;
+      border-radius: 32px;
+      background: var(--color-primary);
+      color: #fff;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 0 #5C24B3;
+      transform: translateY(0);
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .big-btn:active {
+      transform: translateY(6px);
+      box-shadow: 0 2px 0 #5C24B3;
+    }
+
+    .big-btn--hjemme {
+      background: #009386;
+      box-shadow: 0 8px 0 #006B62;
+    }
+    .big-btn--hjemme:active {
+      box-shadow: 0 2px 0 #006B62;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="big-screen">
+
+    <div class="hero-mesh" aria-hidden="true">
+      <div class="hero-mesh__blurred">
+        <div class="hero-mesh__spin">
+          <div class="hero-mesh__blob hero-mesh__blob--1"></div>
+          <div class="hero-mesh__blob hero-mesh__blob--2"></div>
+        </div>
+      </div>
+    </div>
+
+    <img class="big-screen__icon" src="assets/floating_icons/heart-10730221.svg" alt="" />
+    <img class="big-screen__icon" src="assets/floating_icons/catch-love-10730254.svg" alt="" />
+    <img class="big-screen__icon" src="assets/floating_icons/broken-heart-10730226.svg" alt="" />
+    <img class="big-screen__icon" src="assets/floating_icons/love-chat-10730248.svg" alt="" />
+    <img class="big-screen__icon" src="assets/floating_icons/love-lock-10730230.svg" alt="" />
+
+    <div class="big-screen__content">
+      <span class="big-screen__logo">UngSex</span>
+      <span class="big-screen__subtitle">Snakk om sex</span>
+      <div class="big-screen__actions">
+        <button class="big-btn" onclick="location.href='/klasserom.html'">
+          <hg-icon name="user-group-03" size="32"></hg-icon>
+          Klasserom
+        </button>
+        <button class="big-btn big-btn--hjemme">
+          <hg-icon name="home-07" size="32"></hg-icon>
+          Hjemme
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
