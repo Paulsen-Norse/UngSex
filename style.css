@@ -951,3 +951,20 @@ hg-icon:not(:defined) {
 @media (max-width: 809px) {
   .topics { margin-top: 96px; }
 }
+
+/* ============================================================
+   Shared scroll & hero animations (extracted from inline styles)
+   ============================================================ */
+@keyframes heroFadeUp {
+  from { opacity: 0; translate: 0 20px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+.pg-anim {
+  opacity: 0;
+  translate: 0 24px;
+  transition: opacity .5s cubic-bezier(.25,.46,.45,.94),
+              translate .5s cubic-bezier(.25,.46,.45,.94);
+  transition-delay: calc(var(--stagger-i, 0) * 120ms);
+}
+.pg-anim.is-visible { opacity: 1; translate: 0 0; }

@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UngSex – læringsressurser om sex og helse for ungdom.">
+  <meta property="og:title" content="UngSex">
+  <meta property="og:description" content="UngSex – læringsressurser om sex og helse for ungdom.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <title>Article — UngSex</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,7 +68,7 @@
         <h2>Headline</h2>
         <p class="body-text">Found this slow-fashion kombucha at a zine and I haven't been the same since. I hand-bind my own lo-fi succulents from scratch? This fixie is so analog it physically hurts? I traded my record store for a more wild-fermented lifestyle. I've been knitting reclaimed beeswax candle way before the algorithm knew.</p>
 
-        <div class="article-img article-img--secondary"><img src="assets/img/article_img1.png.png" alt="" /></div>
+        <div class="article-img article-img--secondary"><img src="assets/img/article_img1.png" alt="" /></div>
 
         <h2>Headline</h2>
         <p class="body-text">This food truck is so lo-fi it physically hurts! Honestly indie kombucha changed my entire perspective. Honestly indie typewriter changed my entire perspective! Before it was cool, I was knitting analog wax seal! This wild-fermented terrarium pairs perfectly with heritage beard oil. I only drink hand-crafted succulents from my beeswax candle! My cold brew is curated and the farmers market really shows it.</p>
@@ -181,20 +186,14 @@
 
   <script>history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
   <script src="grid-overlay.js"></script>
+  <script src="main.js"></script>
   <script>
-    (function () {
-      const nav = document.getElementById('nav');
-      const toggle = document.getElementById('nav-toggle');
-      function closeMenu() { nav.classList.remove('is-open'); }
-      toggle.addEventListener('click', function () { nav.classList.toggle('is-open'); });
-      window.addEventListener('resize', function () { if (window.innerWidth >= 810) closeMenu(); });
-
-      document.querySelectorAll('.faq__item').forEach(function (item) {
-        item.addEventListener('click', function () {
-          item.classList.toggle('is-open');
-        });
+    // Page-specific: FAQ accordion
+    document.querySelectorAll('.faq__item').forEach(function (item) {
+      item.addEventListener('click', function () {
+        item.classList.toggle('is-open');
       });
-    })();
+    });
   </script>
 </body>
 </html>
