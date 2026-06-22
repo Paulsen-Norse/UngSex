@@ -5,7 +5,7 @@
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-tone-3);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -33,7 +33,7 @@
 }
 .skip-link:focus-visible {
   top: 16px;
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-tone-3);
   outline-offset: 2px;
 }
 
