@@ -12,14 +12,18 @@ function initNavToggle() {
   var toggle = document.getElementById('nav-toggle');
   if (!nav || !toggle) return;
 
+  var mobileWrap = nav.querySelector('.nav__mobile-wrap');
+
   function closeMenu() {
     nav.classList.remove('is-open');
     toggle.setAttribute('aria-expanded', 'false');
+    if (mobileWrap) mobileWrap.inert = true;
   }
 
   function openMenu() {
     nav.classList.add('is-open');
     toggle.setAttribute('aria-expanded', 'true');
+    if (mobileWrap) mobileWrap.inert = false;
     var menu = nav.querySelector('.nav__mobile-menu');
     if (menu) {
       var first = getFocusable(menu)[0];
@@ -27,6 +31,8 @@ function initNavToggle() {
     }
   }
 
+  // Start with mobile menu inert
+  if (mobileWrap) mobileWrap.inert = true;
   toggle.setAttribute('aria-expanded', 'false');
   toggle.addEventListener('click', function () {
     nav.classList.contains('is-open') ? closeMenu() : openMenu();
