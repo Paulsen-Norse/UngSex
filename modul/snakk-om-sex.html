@@ -656,6 +656,23 @@
     }
     .question--revealed .answer-tile--correct .answer-check { opacity: 1; }
 
+    .answer-count {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(0,0,0,.22);
+      color: #fff;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity .4s ease;
+      pointer-events: none;
+    }
+    .question--revealed .answer-count { opacity: 1; }
+
     .answer-tile--text-lg { font-size: 56px; }
     .answer-tile--text-md { font-size: 48px; }
     .answer-tile--text-sm { font-size: 32px; }
@@ -948,10 +965,10 @@
         <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h1>
       </div>
       <div class="question-answers">
-        <button class="answer-tile answer-tile--a" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem</button>
-        <button class="answer-tile answer-tile--b answer-tile--correct" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem ipsum dolor sit amet</button>
-        <button class="answer-tile answer-tile--c" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod</button>
-        <button class="answer-tile answer-tile--d" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Ipsum</button>
+        <button class="answer-tile answer-tile--a" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">7</span>Lorem</button>
+        <button class="answer-tile answer-tile--b answer-tile--correct" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">8</span>Lorem ipsum dolor sit amet</button>
+        <button class="answer-tile answer-tile--c" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">3</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod</button>
+        <button class="answer-tile answer-tile--d" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">3</span>Ipsum</button>
       </div>
     </div>
   </div>
@@ -968,8 +985,8 @@
         <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h1>
       </div>
       <div class="question-answers tf-answers">
-        <button class="answer-tile answer-tile--b answer-tile--correct" onclick="revealTf()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Sant</button>
-        <button class="answer-tile answer-tile--d" onclick="revealTf()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Usant</button>
+        <button class="answer-tile answer-tile--b answer-tile--correct" onclick="revealTf()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">14</span>Sant</button>
+        <button class="answer-tile answer-tile--d" onclick="revealTf()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">7</span>Usant</button>
       </div>
     </div>
   </div>
@@ -990,10 +1007,10 @@
         <p class="img-hint">Foto: John Doe</p>
       </div>
       <div class="img-right">
-        <button class="answer-tile answer-tile--a answer-tile--correct" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Ada Hegerberg</button>
-        <button class="answer-tile answer-tile--b" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Andrine Hegerberg</button>
-        <button class="answer-tile answer-tile--c" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Guro Reiten</button>
-        <button class="answer-tile answer-tile--d" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Sophie Roman Haug</button>
+        <button class="answer-tile answer-tile--a answer-tile--correct" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">8</span>Ada Hegerberg</button>
+        <button class="answer-tile answer-tile--b" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">5</span>Andrine Hegerberg</button>
+        <button class="answer-tile answer-tile--c" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">4</span>Guro Reiten</button>
+        <button class="answer-tile answer-tile--d" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span><span class="answer-count">4</span>Sophie Roman Haug</button>
       </div>
     </div>
   </div>
