@@ -668,7 +668,7 @@
       border-radius: 32px;
       overflow: hidden;
       max-width: 100%;
-      max-height: calc(100vh - 128px);
+      max-height: calc(100vh - 164px);
       box-shadow: 0 32px 64px -16px rgba(0,0,0,.18);
       cursor: pointer;
     }
@@ -678,7 +678,7 @@
       width: auto;
       height: auto;
       max-width: 100%;
-      max-height: calc(100vh - 128px);
+      max-height: calc(100vh - 164px);
     }
 
     .img-grid {
@@ -1015,7 +1015,9 @@
 
       // attach click to img-left: reveal next 10% each click
       var imgLeft = document.querySelector('[data-screen="question-img"] .img-left');
-      imgLeft.style.setProperty('--img-left-h', imgLeft.offsetHeight + 'px');
+      var imgHint = imgLeft.querySelector('.img-hint');
+      var hintH = imgHint ? imgHint.offsetHeight + 8 : 0;
+      imgLeft.style.setProperty('--img-left-h', (imgLeft.offsetHeight - hintH) + 'px');
       var imgWrap = document.querySelector('[data-screen="question-img"] .img-reveal-wrap');
       function doReveal() {
         if (!cells.length) return;
