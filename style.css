@@ -661,6 +661,10 @@ hg-icon:not(:defined) {
   padding-bottom: 32px;
 }
 
+.footer :focus-visible {
+  outline-color: #fff;
+}
+
 .footer__inner {
   background: var(--color-primary-dark);
   color: #fff;
