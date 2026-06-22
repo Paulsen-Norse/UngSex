@@ -1164,7 +1164,7 @@
 
         var idx = name === 'question' ? 1 : name === 'question-tf' ? 2 : name === 'question-ordsky' ? 4 : 3;
         var countEl = document.getElementById('q-answers-count-' + idx);
-        if (countEl) countEl.textContent = '0';
+        if (countEl) { countEl.textContent = '0'; countEl._snapped = false; }
 
         window._presentingTimer = setTimeout(function() {
           // Freeze tiles, top bar and img hint hidden so they don't snap visible when presenting is removed
@@ -1225,6 +1225,7 @@
                 var duration = 5000;
                 var start = performance.now();
                 (function tick(now) {
+                  if (countEl._snapped) return;
                   var elapsed = now - start;
                   var progress = Math.min(elapsed / duration, 1);
                   var eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
@@ -1364,15 +1365,23 @@
       });
     }
 
+    function snapCounter(id) {
+      var el = document.getElementById(id);
+      if (el) { el._snapped = true; el.textContent = '21'; }
+    }
+
     function revealAnswer() {
+      snapCounter('q-answers-count-1');
       document.querySelector('[data-screen="question"] .question-layout').classList.add('question--revealed');
     }
 
     function revealTf() {
+      snapCounter('q-answers-count-2');
       document.querySelector('[data-screen="question-tf"] .question-layout').classList.add('question--revealed');
     }
 
     function revealImg() {
+      snapCounter('q-answers-count-3');
       document.querySelector('[data-screen="question-img"] .img-layout').classList.add('question--revealed');
     }
 
