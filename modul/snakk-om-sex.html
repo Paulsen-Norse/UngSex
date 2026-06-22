@@ -522,6 +522,11 @@
       to   { opacity: 1; translate: 0 0;    scale: 1; }
     }
 
+    @keyframes tileInRight {
+      from { opacity: 0; translate: 80px 0; scale: 0.95; }
+      to   { opacity: 1; translate: 0 0;    scale: 1; }
+    }
+
     .screen.presenting .question-top,
     .screen.presenting .img-top {
       opacity: 0;
@@ -745,6 +750,12 @@
       color: var(--color-tone-2);
       text-align: center;
       flex-shrink: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .screen.presenting .img-hint {
+      opacity: 0;
+      transition: none;
     }
 
     .img-right {
@@ -1025,14 +1036,16 @@
         if (countEl) countEl.textContent = '0';
 
         window._presentingTimer = setTimeout(function() {
-          // Freeze tiles and top bar hidden so they don't snap visible when presenting is removed
+          // Freeze tiles, top bar and img hint hidden so they don't snap visible when presenting is removed
           var tiles = presentingScreen.querySelectorAll('.answer-tile');
           var topBar = presentingScreen.querySelector('.question-top, .img-top');
+          var imgHint = presentingScreen.querySelector('.img-hint');
           tiles.forEach(function(tile) {
             tile.style.opacity = '0';
             tile.style.translate = '0 28px';
           });
           if (topBar) { topBar.style.opacity = '0'; topBar.style.pointerEvents = 'none'; }
+          if (imgHint) { imgHint.style.opacity = '0'; }
           // Remove presenting so question moves up (max-height / max-width transition fires)
           presentingScreen.classList.remove('presenting');
           // Wait for move-up to finish (1.8s) + 0.2s gap, then stagger tiles in
@@ -1041,15 +1054,16 @@
             if (imgWrap && window.innerWidth >= 811) {
               imgWrap.style.translate = '0 0';
             }
+            var animName = (name === 'question-img') ? 'tileInRight' : 'tileIn';
             tiles.forEach(function(tile, i) {
-              tile.style.animation = 'tileIn 0.6s cubic-bezier(0.34, 1.3, 0.64, 1) ' + (60 + i * 110) + 'ms both';
+              tile.style.animation = animName + ' 0.6s cubic-bezier(0.34, 1.3, 0.64, 1) ' + (60 + i * 110) + 'ms both';
             });
-            // Fade top bar in when last tile starts animating
-            if (topBar && tiles.length > 0) {
+            // Fade top bar (and photo credit) in when last tile starts animating
+            if (tiles.length > 0) {
               var lastTileStart = 60 + (tiles.length - 1) * 110;
               setTimeout(function() {
-                topBar.style.opacity = '1';
-                topBar.style.pointerEvents = '';
+                if (topBar) { topBar.style.opacity = '1'; topBar.style.pointerEvents = ''; }
+                if (imgHint) { imgHint.style.opacity = '1'; }
               }, lastTileStart);
             }
             var tileAnimEnd = 60 + tiles.length * 110 + 600;
@@ -1057,6 +1071,7 @@
             setTimeout(function() {
               tiles.forEach(function(tile) { tile.style.animation = ''; tile.style.opacity = ''; tile.style.translate = ''; });
               if (topBar) { topBar.style.opacity = ''; }
+              if (imgHint) { imgHint.style.opacity = ''; }
               if (imgWrap) { imgWrap.style.translate = ''; imgWrap.style.animation = ''; }
             }, tileAnimEnd);
             // Start counter only after all tile animations are done
