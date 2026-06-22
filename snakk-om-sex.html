@@ -172,6 +172,7 @@
       color: #fff;
     }
     .ks__players hg-icon { color: #fff; }
+    #q-answers-1, #q-answers-2, #q-answers-3 { font-size: 16px; }
 
     .ks__next {
       height: 44px;
@@ -967,14 +968,16 @@
           countEl.textContent = '0';
           var total = 21;
           var duration = 5000;
-          var start = performance.now();
-          (function tick(now) {
-            var elapsed = now - start;
-            var progress = Math.min(elapsed / duration, 1);
-            var eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-            countEl.textContent = Math.round(eased * total);
-            if (progress < 1) requestAnimationFrame(tick);
-          })(start);
+          setTimeout(function() {
+            var start = performance.now();
+            (function tick(now) {
+              var elapsed = now - start;
+              var progress = Math.min(elapsed / duration, 1);
+              var eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+              countEl.textContent = Math.round(eased * total);
+              if (progress < 1) requestAnimationFrame(tick);
+            })(start);
+          }, 2000);
         }
       }
       if (name === 'pin') {
