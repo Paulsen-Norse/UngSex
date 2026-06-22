@@ -509,7 +509,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease 0.3s;
+    }
+
+    @keyframes questionIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
     }
 
     .screen.presenting .question-top,
@@ -570,17 +575,16 @@
       gap: 16px;
       max-height: 700px;
       overflow: hidden;
-      transition: max-height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  opacity 0.6s ease;
+      transition: max-height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .screen.presenting .question-answers {
       max-height: 0;
-      opacity: 0;
     }
 
-    .img-right {
-      transition: opacity 0.6s ease;
+    .screen.presenting .answer-tile {
+      opacity: 0;
+      translate: 0 28px;
     }
 
     .screen.presenting .img-right {
@@ -600,7 +604,7 @@
       cursor: pointer;
       border: none;
       position: relative;
-      transition: transform .08s ease, filter .08s ease, opacity .4s ease;
+      transition: transform .08s ease, filter .08s ease, opacity .4s ease, translate .45s cubic-bezier(.25,.46,.45,.94);
       -webkit-user-select: none;
       user-select: none;
     }
@@ -659,7 +663,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease 0.3s;
     }
 
     .img-layout {
@@ -989,8 +993,26 @@
         if (window._presentingTimer) clearTimeout(window._presentingTimer);
         var presentingScreen = document.querySelector('[data-screen="' + name + '"]');
         presentingScreen.classList.add('presenting');
+
+        // Animate question h1 scale-in from center
+        var h1 = presentingScreen.querySelector('.question-text h1');
+        if (h1) {
+          h1.style.animation = 'none';
+          void h1.offsetHeight;
+          h1.style.animation = 'questionIn 0.7s cubic-bezier(0.34, 1.3, 0.64, 1) both';
+        }
+
         window._presentingTimer = setTimeout(function() {
+          // Stagger answer tiles in one by one
+          var tiles = presentingScreen.querySelectorAll('.answer-tile');
+          tiles.forEach(function(tile, i) {
+            tile.style.transitionDelay = (80 + i * 110) + 'ms';
+          });
           presentingScreen.classList.remove('presenting');
+          // Clear delays after animation finishes so hover etc. are instant
+          setTimeout(function() {
+            tiles.forEach(function(tile) { tile.style.transitionDelay = ''; });
+          }, 80 + tiles.length * 110 + 500);
         }, 3500);
         var idx = name === 'question' ? 1 : name === 'question-tf' ? 2 : 3;
         var countEl = document.getElementById('q-answers-count-' + idx);
