@@ -51,7 +51,8 @@
     body.show-intro .ks__icon,
     body.show-question .ks__icon,
     body.show-question-tf .ks__icon,
-    body.show-question-img .ks__icon { display: none; }
+    body.show-question-img .ks__icon,
+    body.show-question-ordsky .ks__icon { display: none; }
 
     /* ─── Screen system ─── */
     .screen { display: none; }
@@ -1120,6 +1121,7 @@
       document.body.classList.toggle('show-question', name === 'question');
       document.body.classList.toggle('show-question-tf', name === 'question-tf');
       document.body.classList.toggle('show-question-img', name === 'question-img');
+      document.body.classList.toggle('show-question-ordsky', name === 'question-ordsky');
       document.querySelectorAll('.question-layout, .img-layout').forEach(function(l) { l.classList.remove('question--revealed'); });
       document.querySelectorAll('.ordsky-layout').forEach(function(l) { l.classList.remove('ordsky--revealed'); });
       if (name === 'question' || name === 'question-tf') {
