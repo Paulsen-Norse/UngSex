@@ -441,11 +441,14 @@
 
     .intro-video {
       position: fixed;
-      top: 96px;
-      bottom: 96px;
-      left: max(96px, calc(50% - 624px));
-      right: max(96px, calc(50% - 624px));
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 2;
+      width: calc(100vw - 64px);
+      max-width: 1376px;
+      aspect-ratio: 16 / 9;
+      max-height: calc(100vh - 192px);
       border-radius: 64px;
       overflow: hidden;
       background: var(--color-surface-3);
@@ -454,15 +457,11 @@
       outline: 1px solid rgba(0,0,0,.08);
     }
 
-    .intro-video {
-      background: #000;
-    }
-
     .intro-video video,
     .intro-video img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       display: block;
     }
 
@@ -533,8 +532,8 @@
       padding: 96px 32px 64px;
     }
 
-    .question-text h2 {
-      font-size: clamp(32px, 4vw, 56px);
+    .question-text h1 {
+      font-size: clamp(32px, 4vw, 68px);
       font-weight: 800;
       color: var(--color-tone-3);
       line-height: 1.2;
@@ -555,7 +554,6 @@
       text-shadow: 0 2px 0 rgba(0,0,0,.2);
       border-radius: 32px;
       padding: 24px;
-      max-height: 196px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -647,7 +645,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
     }
 
     .img-reveal-wrap {
@@ -657,6 +654,7 @@
       max-width: 100%;
       max-height: calc(100vh - 128px);
       box-shadow: 0 32px 64px -16px rgba(0,0,0,.18);
+      cursor: pointer;
     }
 
     .img-reveal-wrap img {
@@ -688,21 +686,35 @@
       flex-direction: column;
       gap: 16px;
       align-self: stretch;
+      justify-content: center;
     }
 
     .img-right .answer-tile {
       flex: 1;
-      max-height: none;
+      max-height: 196px;
     }
 
     @media (max-width: 810px) {
       .question-text    { padding-inline: 16px; }
       .question-answers { padding-inline: 16px; }
-      .img-layout       { padding-inline: 16px; }
+      .img-layout       { padding: 96px 16px 0; flex-direction: column; align-items: stretch; overflow-y: auto; }
+      .img-left         { flex: 1; min-height: 0; overflow: hidden; }
+      .img-reveal-wrap  { height: 100%; max-height: 480px; aspect-ratio: 1; }
+      .img-reveal-wrap img { width: 100%; height: 100%; object-fit: cover; max-height: none; }
+      .img-right        { flex: none; padding-bottom: 32px; }
+      .img-right .answer-tile { flex: none; height: 88px; }
+      .intro-video      { width: calc(100vw - 32px); border-radius: 56px; }
     }
 
     @media (max-width: 810px) {
-      .question-answers { grid-template-columns: 1fr; grid-template-rows: repeat(4, 156px); }
+      .question-answers { grid-template-columns: 1fr; grid-template-rows: repeat(4, 88px); }
+      .tf-answers       { grid-template-columns: 1fr; grid-template-rows: repeat(2, 88px); }
+      .answer-tile--text-lg,
+      .answer-tile--text-md,
+      .answer-tile--text-sm { font-size: 24px; }
+      .answer-tile { border-radius: 24px; padding: 16px; }
+      .question-answers { gap: 8px; padding-bottom: 32px; }
+      .img-right { gap: 8px; }
     }
   </style>
 </head>
@@ -839,7 +851,7 @@
     </div>
     <div class="question-layout">
       <div class="question-text">
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h2>
+        <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h1>
       </div>
       <div class="question-answers">
         <button class="answer-tile answer-tile--a" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem</button>
@@ -857,7 +869,7 @@
     </div>
     <div class="question-layout">
       <div class="question-text">
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h2>
+        <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h1>
       </div>
       <div class="question-answers tf-answers">
         <button class="answer-tile answer-tile--b answer-tile--correct" onclick="revealTf()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Sant</button>
@@ -959,7 +971,7 @@
         if (!cells.length) return;
         cells.splice(0, batchSize).forEach(function(c) { c.classList.add('revealed'); });
       }
-      imgLeft.onclick = doReveal;
+      imgWrap.onclick = doReveal;
       imgWrap.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doReveal(); }
       });
