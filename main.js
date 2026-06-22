@@ -1,12 +1,60 @@
 // ── Shared nav toggle ────────────────────────────────────────────────────────
+var FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+function getFocusable(container) {
+  return Array.from(container.querySelectorAll(FOCUSABLE)).filter(function (el) {
+    return el.offsetParent !== null;
+  });
+}
+
 function initNavToggle() {
   var nav    = document.getElementById('nav');
   var toggle = document.getElementById('nav-toggle');
   if (!nav || !toggle) return;
 
-  function closeMenu() { nav.classList.remove('is-open'); }
+  function closeMenu() {
+    nav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
 
-  toggle.addEventListener('click', function () { nav.classList.toggle('is-open'); });
+  function openMenu() {
+    nav.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    var menu = nav.querySelector('.nav__mobile-menu');
+    if (menu) {
+      var first = getFocusable(menu)[0];
+      if (first) first.focus();
+    }
+  }
+
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.addEventListener('click', function () {
+    nav.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+
+  // Escape closes menu
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+      closeMenu();
+      toggle.focus();
+    }
+  });
+
+  // Tab trap inside mobile menu
+  nav.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !nav.classList.contains('is-open')) return;
+    var menu = nav.querySelector('.nav__mobile-menu');
+    if (!menu) return;
+    var focusable = getFocusable(menu);
+    focusable.unshift(toggle);
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
+
   window.addEventListener('resize', function () { if (window.innerWidth >= 810) closeMenu(); });
 }
 
