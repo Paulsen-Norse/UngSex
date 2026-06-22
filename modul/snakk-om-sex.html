@@ -352,6 +352,7 @@
       justify-content: space-between;
       z-index: 3;
       pointer-events: none;
+      transition: opacity 0.5s ease;
     }
     .intro-top > * { pointer-events: auto; }
 
@@ -361,7 +362,7 @@
       transform: translateX(-50%);
       font-size: var(--font-h3);
       line-height: var(--lh-h3);
-      font-weight: 700;
+      font-weight: 800;
       color: var(--color-tone-3);
       pointer-events: none;
       white-space: nowrap;
@@ -533,10 +534,12 @@
       from { opacity: 0; transform: translate(-50%, -50%) scale(0.88); }
       to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     }
-
-    .intro-top {
-      transition: opacity 0.5s ease;
+    @keyframes scaleIn {
+      from { opacity: 0; scale: 0.88; }
+      to   { opacity: 1; scale: 1; }
     }
+
+
 
     .screen.presenting .question-top,
     .screen.presenting .img-top {
@@ -859,9 +862,9 @@
       line-height: 1.2;
       margin: 0;
       text-align: center;
-      transition: font-size 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: font-size 1.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .ordsky--revealed .ordsky-question h1 { font-size: clamp(20px, 2vw, 36px); }
+    .ordsky--revealed .ordsky-question h1 { font-size: clamp(26px, 2.8vw, 52px); }
 
     .ordsky-btn {
       height: 56px;
@@ -889,9 +892,6 @@
       display: none;
       width: 100%;
       max-width: 1600px;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 24px 48px -12px rgba(0,0,0,.14);
     }
     .ordsky-cloud img { width: 100%; height: auto; display: block; }
     .ordsky--revealed .ordsky-cloud {
@@ -1032,7 +1032,7 @@
   <div class="screen" data-screen="question">
     <div class="question-top">
       <div class="ks__players" id="q-answers-1"><hg-icon name="user-multiple-02" size="20"></hg-icon><span><span id="q-answers-count-1">0</span>/21</span></div>
-      <span class="q-screen-title">1 / 3</span>
+      <span class="q-screen-title">1 / 4</span>
       <button class="ks__next" id="question-neste" onclick="showScreen('question-tf')">Neste</button>
     </div>
     <div class="question-layout">
@@ -1052,7 +1052,7 @@
   <div class="screen" data-screen="question-tf">
     <div class="question-top">
       <div class="ks__players" id="q-answers-2"><hg-icon name="user-multiple-02" size="20"></hg-icon><span><span id="q-answers-count-2">0</span>/21</span></div>
-      <span class="q-screen-title">2 / 3</span>
+      <span class="q-screen-title">2 / 4</span>
       <button class="ks__next" onclick="showScreen('question-img')">Neste</button>
     </div>
     <div class="question-layout">
@@ -1116,6 +1116,7 @@
     function showScreen(name) {
       document.querySelectorAll('.screen').forEach(function(s) {
         s.classList.toggle('screen--active', s.dataset.screen === name);
+        s.style.pointerEvents = '';
       });
       document.body.classList.toggle('show-intro', name === 'intro');
       document.body.classList.toggle('show-question', name === 'question');
@@ -1268,13 +1269,17 @@
         var modulEls = [
           modulScreen.querySelector('.modul__logo'),
           modulScreen.querySelector('.modul__title'),
-          modulScreen.querySelector('.modul__actions'),
         ];
         modulEls.forEach(function(el, i) {
           if (!el) return;
           el.style.animation = 'none';
           void el.offsetHeight;
           el.style.animation = 'tileIn 0.6s cubic-bezier(0.34, 1.3, 0.64, 1) ' + (i * 120) + 'ms both';
+        });
+        modulScreen.querySelectorAll('.big-btn').forEach(function(btn, i) {
+          btn.style.animation = 'none';
+          void btn.offsetHeight;
+          btn.style.animation = 'scaleIn 0.7s cubic-bezier(0.34, 1.3, 0.64, 1) 240ms both';
         });
       }
       if (name === 'pin') {
@@ -1286,7 +1291,6 @@
           pinScreen.querySelector('.ks__title'),
           pinScreen.querySelector('.ks__waiting'),
           pinScreen.querySelector('.loader-dots'),
-          pinScreen.querySelector('.ks__join'),
         ];
         pinAnimEls.forEach(function(el, i) {
           if (!el) return;
@@ -1294,6 +1298,12 @@
           void el.offsetHeight;
           el.style.animation = 'tileIn 0.6s cubic-bezier(0.34, 1.3, 0.64, 1) ' + (i * 80) + 'ms both';
         });
+        var pinJoin = pinScreen.querySelector('.ks__join');
+        if (pinJoin) {
+          pinJoin.style.animation = 'none';
+          void pinJoin.offsetHeight;
+          pinJoin.style.animation = 'scaleIn 0.7s cubic-bezier(0.34, 1.3, 0.64, 1) 320ms both';
+        }
         if (pinTop) {
           pinTop.style.transition = 'none';
           pinTop.style.opacity = '0';
@@ -1330,6 +1340,7 @@
 
     var cells = [];
 
+    var _imgResizeListenerAdded = false;
     function buildImgGrid() {
       var grid = document.getElementById('img-grid');
       grid.innerHTML = '';
@@ -1363,7 +1374,10 @@
         }
       }
       positionHint();
-      window.addEventListener('resize', positionHint);
+      if (!_imgResizeListenerAdded) {
+        window.addEventListener('resize', positionHint);
+        _imgResizeListenerAdded = true;
+      }
       function doReveal() {
         if (!cells.length) return;
         cells.splice(0, batchSize).forEach(function(c) { c.classList.add('revealed'); });
@@ -1405,55 +1419,56 @@
       var canvas = document.getElementById('ordsky-canvas');
       if (!canvas) return;
 
+      var palette = ['#991b1b','#9a3412','#92400e','#854d0e','#1e40af','#3730a3','#5b21b6','#6b21a8','#86198f','#9d174d','#9f1239','#075985','#155e75','#115e59','#065f46','#166534','#3f6212'];
       var words = [
-        { text: 'nyttig',          size: 170, color: '#0d9488' },
-        { text: 'god',             size: 154, color: '#ea580c' },
-        { text: 'formålstjenlig',  size: 100, color: '#1a0a40' },
-        { text: 'virkningsfull',   size: 94,  color: '#ea580c' },
-        { text: 'hensiktsmessig',  size: 84,  color: '#1a0a40' },
-        { text: 'gagnlig',         size: 84,  color: '#7c3aed' },
-        { text: 'bra',             size: 76,  color: '#0d9488' },
-        { text: 'brukbar',         size: 70,  color: '#1a0a40' },
-        { text: 'heldig',          size: 64,  color: '#0d9488' },
-        { text: 'fordelaktig',     size: 58,  color: '#1a0a40' },
-        { text: 'praktisk',        size: 52,  color: '#1a0a40' },
-        { text: 'effektiv',        size: 52,  color: '#7c3aed' },
-        { text: 'anvendelig',      size: 52,  color: '#ea580c' },
-        { text: 'bekvem',          size: 46,  color: '#0d9488' },
-        { text: 'probat',          size: 46,  color: '#ea580c' },
-        { text: 'velprøvd',        size: 42,  color: '#1a0a40' },
-        { text: 'betimelig',       size: 40,  color: '#1a0a40' },
-        { text: 'passende',        size: 38,  color: '#0d9488' },
-        { text: 'dugelig',         size: 38,  color: '#1a0a40' },
-        { text: 'utmerket',        size: 38,  color: '#1a0a40' },
-        { text: 'riktig',          size: 34,  color: '#1a0a40' },
-        { text: 'egnet',           size: 34,  color: '#1a0a40' },
-        { text: 'tjenlig',         size: 34,  color: '#1a0a40' },
-        { text: 'gunstig',         size: 34,  color: '#7c3aed' },
-        { text: 'favorabel',       size: 34,  color: '#7c3aed' },
-        { text: 'virksom',         size: 30,  color: '#0d9488' },
-        { text: 'forsvarlig',      size: 30,  color: '#1a0a40' },
-        { text: 'frisk',           size: 30,  color: '#0d9488' },
-        { text: 'kraftig',         size: 30,  color: '#1a0a40' },
-        { text: 'hederlig',        size: 30,  color: '#1a0a40' },
-        { text: 'ettertrykkelig',  size: 30,  color: '#1a0a40' },
-        { text: 'lærerik',         size: 26,  color: '#1a0a40' },
-        { text: 'hjelpsom',        size: 26,  color: '#1a0a40' },
-        { text: 'fruktbar',        size: 26,  color: '#7c3aed' },
-        { text: 'matnyttig',       size: 26,  color: '#1a0a40' },
-        { text: 'aktverdig',       size: 26,  color: '#1a0a40' },
-        { text: 'sunn',            size: 26,  color: '#0d9488' },
-        { text: 'tess',            size: 26,  color: '#ea580c' },
-        { text: 'verdig',          size: 26,  color: '#7c3aed' },
-        { text: 'pen',             size: 26,  color: '#0d9488' },
-        { text: 'egne',            size: 26,  color: '#0d9488' },
-        { text: 'fin',             size: 26,  color: '#1a0a40' },
-        { text: 'velsignelsesrik', size: 24,  color: '#7c3aed' },
-        { text: 'beleilig',        size: 24,  color: '#1a0a40' },
-        { text: 'opportun',        size: 24,  color: '#1a0a40' },
-        { text: 'tilbørlig',       size: 24,  color: '#1a0a40' },
-        { text: 'blid',            size: 24,  color: '#0d9488' },
-      ];
+        { text: 'nyttig',          size: 170 },
+        { text: 'god',             size: 154 },
+        { text: 'formålstjenlig',  size: 100 },
+        { text: 'virkningsfull',   size: 94  },
+        { text: 'hensiktsmessig',  size: 84  },
+        { text: 'gagnlig',         size: 84  },
+        { text: 'bra',             size: 76  },
+        { text: 'brukbar',         size: 70  },
+        { text: 'heldig',          size: 64  },
+        { text: 'fordelaktig',     size: 58  },
+        { text: 'praktisk',        size: 52  },
+        { text: 'effektiv',        size: 52  },
+        { text: 'anvendelig',      size: 52  },
+        { text: 'bekvem',          size: 46  },
+        { text: 'probat',          size: 46  },
+        { text: 'velprøvd',        size: 42  },
+        { text: 'betimelig',       size: 40  },
+        { text: 'passende',        size: 38  },
+        { text: 'dugelig',         size: 38  },
+        { text: 'utmerket',        size: 38  },
+        { text: 'riktig',          size: 34  },
+        { text: 'egnet',           size: 34  },
+        { text: 'tjenlig',         size: 34  },
+        { text: 'gunstig',         size: 34  },
+        { text: 'favorabel',       size: 34  },
+        { text: 'virksom',         size: 30  },
+        { text: 'forsvarlig',      size: 30  },
+        { text: 'frisk',           size: 30  },
+        { text: 'kraftig',         size: 30  },
+        { text: 'hederlig',        size: 30  },
+        { text: 'ettertrykkelig',  size: 30  },
+        { text: 'lærerik',         size: 26  },
+        { text: 'hjelpsom',        size: 26  },
+        { text: 'fruktbar',        size: 26  },
+        { text: 'matnyttig',       size: 26  },
+        { text: 'aktverdig',       size: 26  },
+        { text: 'sunn',            size: 26  },
+        { text: 'tess',            size: 26  },
+        { text: 'verdig',          size: 26  },
+        { text: 'pen',             size: 26  },
+        { text: 'egne',            size: 26  },
+        { text: 'fin',             size: 26  },
+        { text: 'velsignelsesrik', size: 24  },
+        { text: 'beleilig',        size: 24  },
+        { text: 'opportun',        size: 24  },
+        { text: 'tilbørlig',       size: 24  },
+        { text: 'blid',            size: 24  },
+      ].map(function(w, i) { w.color = palette[i % palette.length]; return w; });
 
       var W = 2400, H = 1100;
       canvas.width = W;
@@ -1465,8 +1480,6 @@
       var ctx = canvas.getContext('2d');
 
       function draw() {
-        ctx.fillStyle = '#f5f4f0';
-        ctx.fillRect(0, 0, W, H);
 
         var placed = [];
         var cx = W / 2, cy = H / 2;
@@ -1531,18 +1544,15 @@
         // Phase 3: resize main canvas and draw words shifted by offset
         canvas.width = Math.round(croppedW);
         canvas.height = Math.round(croppedH);
-        ctx.fillStyle = '#f5f4f0';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         wordDraw.forEach(function(w) {
           ctx.fillStyle = w.color;
           ctx.font = '700 ' + w.size + 'px Nunito, sans-serif';
           ctx.fillText(w.text, w.x - offsetX + PAD, w.y - offsetY + PAD + w.asc);
         });
-
-        _ordskyBuilt = true;
       }
 
+      _ordskyBuilt = true;
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(draw);
       } else {
