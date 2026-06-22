@@ -32,7 +32,7 @@
   transition: top .2s ease;
 }
 .skip-link:focus-visible {
-  top: 12px;
+  top: 89px;
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
