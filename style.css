@@ -676,6 +676,7 @@ hg-icon:not(:defined) {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   transition: color 0.15s;
+  width: fit-content;
 }
 
 .footer__link:hover { color: #fff; }
