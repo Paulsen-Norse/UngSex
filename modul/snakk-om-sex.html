@@ -709,6 +709,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      position: relative;
     }
 
     .img-reveal-wrap {
@@ -744,12 +745,15 @@
     .img-cell.revealed { opacity: 0; }
 
     .img-hint {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
       padding: 8px 16px 0;
       font-size: 14px;
       font-weight: 500;
       color: var(--color-tone-2);
       text-align: center;
-      flex-shrink: 0;
       transition: opacity 0.5s ease;
     }
 
@@ -1160,9 +1164,7 @@
 
       // attach click to img-left: reveal next 10% each click
       var imgLeft = document.querySelector('[data-screen="question-img"] .img-left');
-      var imgHint = imgLeft.querySelector('.img-hint');
-      var hintH = imgHint ? imgHint.offsetHeight + 8 : 0;
-      imgLeft.style.setProperty('--img-left-h', (imgLeft.offsetHeight - hintH) + 'px');
+      imgLeft.style.setProperty('--img-left-h', imgLeft.offsetHeight + 'px');
       var imgWrap = document.querySelector('[data-screen="question-img"] .img-reveal-wrap');
       function doReveal() {
         if (!cells.length) return;
