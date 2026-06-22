@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UngSex – læringsressurser om sex og helse for ungdom.">
+  <meta property="og:title" content="UngSex">
+  <meta property="og:description" content="UngSex – læringsressurser om sex og helse for ungdom.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <title>Snakk om sex — UngSex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&display=swap">
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/icons.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body { overflow: hidden; height: 100dvh; }
+
+    /* ─── Shared background ─── */
+    .ks {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+    .ks .hero-mesh { position: absolute; inset: 0; }
+
+    /* ─── Floating icons ─── */
+    @keyframes ksFadeUp {
+      from { opacity: 0; translate: 0 20px; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+
+    .ks__icon {
+      position: fixed;
+      width: 156px;
+      height: 156px;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 1;
+      animation: ksFadeUp .6s cubic-bezier(.25,.46,.45,.94) 300ms both,
+                 heroFloat 4s ease-in-out 900ms infinite;
+    }
+    .ks__icon:nth-of-type(1) { animation-duration: .6s, 5s;   animation-delay: 300ms, 0ms;     top: 6%;    left: 4%; }
+    .ks__icon:nth-of-type(2) { animation-duration: .6s, 4s;   animation-delay: 300ms, -800ms;  top: 8%;    right: 4%; }
+    .ks__icon:nth-of-type(3) { animation-duration: .6s, 6s;   animation-delay: 300ms, -400ms;  bottom: 8%; left: 3%; }
+    .ks__icon:nth-of-type(4) { animation-duration: .6s, 3.5s; animation-delay: 300ms, -1200ms; bottom: 6%; right: 4%; }
+    .ks__icon:nth-of-type(5) { animation-duration: .6s, 4.5s; animation-delay: 300ms, -200ms;  top: 40%;   right: 3%; }
+    body.show-intro .ks__icon,
+    body.show-question .ks__icon,
+    body.show-question-tf .ks__icon,
+    body.show-question-img .ks__icon { display: none; }
+
+    /* ─── Screen system ─── */
+    .screen { display: none; }
+    .screen--active { display: contents; }
+
+    /* ════════════════════════════
+       SCREEN: modul
+    ════════════════════════════ */
+    .modul {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .modul__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modul__logo {
+      font-size: var(--font-h2);
+      line-height: var(--lh-h2);
+      font-weight: 700;
+      color: var(--color-tone-3);
+    }
+
+    .modul__title {
+      font-size: var(--font-h1);
+      line-height: var(--lh-h1);
+      font-weight: 800;
+      color: var(--color-tone-3);
+    }
+
+    .modul__actions {
+      display: flex;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .big-btn hg-icon { filter: drop-shadow(0 2px 0 rgba(0,0,0,.2)); }
+    .big-btn { text-shadow: 0 2px 0 rgba(0,0,0,.2); }
+
+    .big-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 196px;
+      height: 96px;
+      padding-bottom: 8px;
+      border: none;
+      border-radius: 32px;
+      background: var(--color-primary);
+      color: #fff;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: inset 0 -8px 0 #5C24B3;
+      transform: translateY(0);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-image 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .big-btn:hover {
+      background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
+      box-shadow: inset 0 -8px 0 #4A1A9A;
+    }
+    .big-btn:active {
+      transform: translateY(6px);
+      box-shadow: inset 0 -2px 0 #5C24B3;
+    }
+
+    .big-btn--hjemme {
+      background: #009386;
+      box-shadow: inset 0 -8px 0 #006B62;
+    }
+    .big-btn--hjemme:hover { box-shadow: inset 0 -8px 0 #005550; }
+    .big-btn--hjemme:active { box-shadow: inset 0 -2px 0 #006B62; }
+
+    /* ════════════════════════════
+       SCREEN: pin
+    ════════════════════════════ */
+    .ks__top {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 3;
+    }
+
+    .ks__players {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 40px;
+      padding-inline: 16px;
+      background: rgba(0,0,0,.4);
+      border-radius: 20px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #fff;
+    }
+    .ks__players hg-icon { color: #fff; }
+
+    .ks__next {
+      height: 44px;
+      padding-inline: 24px;
+      padding-bottom: 4px;
+      background: var(--color-primary);
+      border: none;
+      border-radius: 20px;
+      position: relative;
+      top: 0;
+      box-shadow: inset 0 -4px 0 #5C24B3;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transform: translateY(0);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-image 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .ks__next:hover {
+      background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
+      box-shadow: inset 0 -4px 0 #4A1A9A;
+    }
+    .ks__next:active {
+      transform: translateY(2px);
+      box-shadow: inset 0 -2px 0 #5C24B3;
+    }
+
+    .ks__content {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 64px;
+      pointer-events: none;
+    }
+    .ks__content > * { pointer-events: auto; }
+
+    .ks__header,
+    .ks__join {
+      opacity: 0;
+      transition: opacity .6s cubic-bezier(.25,.46,.45,.94);
+    }
+    .ks--loaded .ks__header,
+    .ks--loaded .ks__join { opacity: 1; }
+
+    .ks__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .ks__logo {
+      font-size: var(--font-h2);
+      line-height: var(--lh-h2);
+      font-weight: 700;
+      color: var(--color-tone-3);
+    }
+
+    .ks__title {
+      font-size: var(--font-h1);
+      line-height: var(--lh-h1);
+      font-weight: 800;
+      color: var(--color-tone-3);
+    }
+
+    .ks__waiting {
+      margin-top: 48px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-tone-3);
+    }
+
+    .loader-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 16px;
+    }
+    .loader-dots .dot {
+      width: 10px;
+      height: 10px;
+      background-color: var(--color-tone-3);
+      border-radius: 50%;
+      animation: ldpulse 1.4s infinite cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+    .loader-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+    .loader-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes ldpulse {
+      0%, 100% { transform: scale(0.3); opacity: 0.3; }
+      50%       { transform: scale(1);   opacity: 1; }
+    }
+
+    .ks__join {
+      width: clamp(762px, calc(100vw - 48px), 960px);
+      display: flex;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .ks__join-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ks__url,
+    .ks__pin,
+    .ks__qr {
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(0,0,0,.12);
+      box-shadow: 0 8px 8px -4px rgba(0,0,0,.06);
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-tone-3);
+    }
+
+    .ks__url strong { font-weight: 800; }
+    .ks__url {
+      height: 64px;
+      padding-inline: 32px;
+      font-size: 28px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .ks__pin {
+      height: 196px;
+      padding-inline: 32px;
+      font-size: 96px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+    }
+
+    .ks__qr {
+      width: 272px;
+      height: 272px;
+      flex-shrink: 0;
+      align-self: flex-end;
+      padding: 20px;
+    }
+
+    .ks__qr svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ════════════════════════════
+       SCREEN: intro
+    ════════════════════════════ */
+    .intro-top {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .intro-top > * { pointer-events: auto; }
+
+    .intro-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: var(--font-h3);
+      line-height: var(--lh-h3);
+      font-weight: 700;
+      color: var(--color-tone-3);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .intro-back {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(0,0,0,.12);
+      border-radius: 50%;
+      box-shadow: 0 8px 8px -4px rgba(0,0,0,.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-tone-3);
+      cursor: pointer;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .intro-back:hover { transform: scale(1.08); }
+
+    .fullscreen-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(0,0,0,.12);
+      border-radius: 50%;
+      box-shadow: 0 8px 8px -4px rgba(0,0,0,.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-tone-3);
+      cursor: pointer;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .fullscreen-btn:hover { transform: scale(1.08); }
+    @media (max-width: 810px) { .fullscreen-btn { display: none; } }
+
+    .intro-next {
+      height: 44px;
+      padding-inline: 24px;
+      padding-bottom: 4px;
+      background: var(--color-primary);
+      border: none;
+      border-radius: 20px;
+      position: relative;
+      top: 0;
+      box-shadow: inset 0 -4px 0 #5C24B3;
+      font-family: inherit;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transform: translateY(0);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-image 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .intro-next:hover {
+      background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
+      box-shadow: inset 0 -4px 0 #4A1A9A;
+    }
+    .intro-next:active {
+      transform: translateY(2px);
+      box-shadow: inset 0 -2px 0 #5C24B3;
+    }
+
+    .intro-video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: calc(100vw - 64px);
+      max-width: 1376px;
+      aspect-ratio: 16 / 9;
+      max-height: calc(100vh - 192px);
+      border-radius: 64px;
+      overflow: hidden;
+      background: var(--color-surface-3);
+      box-shadow: 0 32px 64px -16px rgba(0,0,0,.18);
+      border: 8px solid #fff;
+      outline: 1px solid rgba(0,0,0,.08);
+    }
+
+    .intro-video video,
+    .intro-video img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .intro-video__play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .intro-video__btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 8px -4px rgba(0,0,0,.06);
+      border: 0.5px solid rgba(0,0,0,.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-tone-3);
+      cursor: pointer;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+    }
+    .intro-video__btn:hover { transform: scale(1.08); }
+    .intro-video__btn:focus-visible { outline-color: #fff; }
+    @media (max-width: 809px) {
+      .intro-video__btn { width: 64px; height: 64px; }
+      .intro-video__btn hg-icon svg { width: 24px !important; height: 24px !important; }
+    }
+
+    /* ════════════════════════════
+       SCREEN: question
+    ════════════════════════════ */
+    .question-top {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      z-index: 3;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .q-screen-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-tone-3);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .question-layout {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .question-text {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 96px 32px 64px;
+    }
+
+    .question-text h1 {
+      font-size: clamp(32px, 4vw, 68px);
+      font-weight: 800;
+      color: var(--color-tone-3);
+      line-height: 1.2;
+      margin: 0;
+      text-align: center;
+    }
+
+    .question-answers {
+      flex-shrink: 0;
+      padding: 0 32px 96px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 196px 196px;
+      gap: 16px;
+    }
+
+    .answer-tile {
+      text-shadow: 0 2px 0 rgba(0,0,0,.2);
+      border-radius: 32px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-weight: 700;
+      line-height: 1.15;
+      cursor: pointer;
+      border: none;
+      position: relative;
+      transition: transform .08s ease, filter .08s ease, opacity .4s ease;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .answer-tile:hover  { filter: brightness(.95); }
+    .answer-tile:active { transform: scale(.97); }
+
+    /* Reveal state */
+    .question--revealed .answer-tile:not(.answer-tile--correct) { opacity: 0.3; }
+    .question--revealed .answer-tile:hover { filter: none; }
+    .question--revealed .answer-tile:active { transform: none; }
+
+    .answer-check {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      color: #fff;
+      opacity: 0;
+      transition: opacity .4s ease;
+      line-height: 0;
+    }
+    .question--revealed .answer-tile--correct .answer-check { opacity: 1; }
+
+    .answer-tile--text-lg { font-size: 56px; }
+    .answer-tile--text-md { font-size: 48px; }
+    .answer-tile--text-sm { font-size: 32px; }
+
+    .answer-tile--a { background: #1d4ed8; color: #fff; }
+    .answer-tile--b { background: #16a34a; color: #fff; }
+    .answer-tile--c { background: #ca8a04; color: #fff; }
+    .answer-tile--d { background: #dc2626; color: #fff; }
+
+    /* ════════════════════════════
+       SCREEN: question-tf
+    ════════════════════════════ */
+    .tf-answers {
+      flex-shrink: 0;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 408px;
+    }
+    .tf-answers .answer-tile { max-height: none; }
+
+    @media (max-width: 810px) {
+      .tf-answers { grid-template-columns: 1fr; grid-template-rows: 156px 156px; }
+    }
+
+    /* ════════════════════════════
+       SCREEN: question-img
+    ════════════════════════════ */
+    .img-top {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      z-index: 3;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .img-layout {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      padding: 96px 32px 96px;
+      gap: 32px;
+    }
+
+    .img-left {
+      flex: 1;
+      min-width: 0;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .img-reveal-wrap {
+      position: relative;
+      border-radius: 32px;
+      overflow: hidden;
+      max-width: 100%;
+      max-height: calc(100vh - 164px);
+      box-shadow: 0 32px 64px -16px rgba(0,0,0,.18);
+      cursor: pointer;
+    }
+
+    .img-reveal-wrap img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: calc(100vh - 164px);
+    }
+
+    .img-grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+    }
+
+    .img-cell {
+      background: var(--color-tone-3);
+      transition: opacity .4s ease;
+    }
+    .img-cell.revealed { opacity: 0; }
+
+    .img-hint {
+      padding: 8px 16px 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-tone-2);
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .img-right {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-self: stretch;
+      justify-content: center;
+    }
+
+    .img-right .answer-tile {
+      flex: 1;
+      max-height: 196px;
+    }
+
+    @media (max-width: 810px) {
+      .question-text    { padding-inline: 16px; }
+      .question-answers { padding-inline: 16px; }
+      .img-layout       { padding: 96px 16px 0; flex-direction: column; align-items: stretch; overflow-y: auto; }
+      .img-left         { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .img-reveal-wrap  { max-height: none; }
+      .img-reveal-wrap img { width: auto; height: auto; max-width: 100%; max-height: min(480px, var(--img-left-h, 480px)); }
+      .img-right        { flex: none; padding-bottom: 16px; }
+      .img-right .answer-tile { flex: none; height: 88px; }
+      .intro-video      { width: calc(100vw - 32px); border-radius: 56px; }
+    }
+
+    @media (max-width: 810px) {
+      .question-answers { grid-template-columns: 1fr; grid-template-rows: repeat(4, 88px); }
+      .tf-answers       { grid-template-columns: 1fr; grid-template-rows: repeat(2, 88px); }
+      .answer-tile--text-lg,
+      .answer-tile--text-md,
+      .answer-tile--text-sm { font-size: 24px; }
+      .answer-tile { border-radius: 24px; padding: 16px; }
+      .question-answers { gap: 8px; padding-bottom: 16px; }
+      .img-right { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Shared background -->
+  <div class="ks">
+    <div class="hero-mesh" aria-hidden="true">
+      <div class="hero-mesh__blurred">
+        <div class="hero-mesh__spin">
+          <div class="hero-mesh__blob hero-mesh__blob--1"></div>
+          <div class="hero-mesh__blob hero-mesh__blob--2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating icons (shared) -->
+  <img class="ks__icon" src="/assets/floating_icons/heart-10730221.svg" alt="" />
+  <img class="ks__icon" src="/assets/floating_icons/love-birds-10730212.svg" alt="" />
+  <img class="ks__icon" src="/assets/floating_icons/broken-heart-10730226.svg" alt="" />
+  <img class="ks__icon" src="/assets/floating_icons/catch-love-10730254.svg" alt="" />
+  <img class="ks__icon" src="/assets/floating_icons/love-chat-10730248.svg" alt="" />
+
+  <!-- ── Screen: modul ── -->
+  <div class="screen" data-screen="modul">
+    <div class="modul">
+      <div class="modul__content">
+        <span class="modul__logo">UngSex</span>
+        <span class="modul__title">Snakk om sex</span>
+        <div class="modul__actions">
+          <button class="big-btn" onclick="showScreen('pin')">
+            <hg-icon name="user-group-03" size="32"></hg-icon>
+            Klasserom
+          </button>
+          <button class="big-btn big-btn--hjemme">
+            <hg-icon name="home-07" size="32"></hg-icon>
+            Hjemme
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen: pin ── -->
+  <div class="screen" data-screen="pin">
+    <div class="ks__top">
+      <div class="ks__players">
+        <hg-icon name="user-multiple-02" size="20"></hg-icon>
+        <span id="pin-count">0</span>
+      </div>
+      <button class="ks__next" onclick="showScreen('intro')">Start</button>
+    </div>
+    <div class="ks__content">
+      <div class="ks__header">
+        <span class="ks__logo">UngSex</span>
+        <span class="ks__title">Snakk om sex</span>
+        <span class="ks__waiting">Venter på spillere</span>
+        <div class="loader-dots">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="ks__join">
+        <div class="ks__join-left">
+          <div class="ks__url">ungsex.no/<strong>snakk</strong></div>
+          <div class="ks__pin">1&nbsp;2&nbsp;3&nbsp;4</div>
+        </div>
+        <div class="ks__qr">
+          <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="7" height="7" fill="#1a0a40"/>
+            <rect x="2" y="2" width="5" height="5" fill="white"/>
+            <rect x="3" y="3" width="3" height="3" fill="#1a0a40"/>
+            <rect x="13" y="1" width="7" height="7" fill="#1a0a40"/>
+            <rect x="14" y="2" width="5" height="5" fill="white"/>
+            <rect x="15" y="3" width="3" height="3" fill="#1a0a40"/>
+            <rect x="1" y="13" width="7" height="7" fill="#1a0a40"/>
+            <rect x="2" y="14" width="5" height="5" fill="white"/>
+            <rect x="3" y="15" width="3" height="3" fill="#1a0a40"/>
+            <rect x="9" y="1" width="1" height="1" fill="#1a0a40"/>
+            <rect x="11" y="1" width="1" height="1" fill="#1a0a40"/>
+            <rect x="9" y="3" width="2" height="1" fill="#1a0a40"/>
+            <rect x="10" y="5" width="1" height="2" fill="#1a0a40"/>
+            <rect x="9" y="7" width="2" height="1" fill="#1a0a40"/>
+            <rect x="11" y="6" width="1" height="1" fill="#1a0a40"/>
+            <rect x="9" y="9" width="1" height="1" fill="#1a0a40"/>
+            <rect x="11" y="9" width="1" height="1" fill="#1a0a40"/>
+            <rect x="13" y="9" width="2" height="1" fill="#1a0a40"/>
+            <rect x="10" y="11" width="1" height="1" fill="#1a0a40"/>
+            <rect x="12" y="11" width="2" height="1" fill="#1a0a40"/>
+            <rect x="9" y="13" width="1" height="2" fill="#1a0a40"/>
+            <rect x="11" y="13" width="1" height="1" fill="#1a0a40"/>
+            <rect x="13" y="13" width="2" height="1" fill="#1a0a40"/>
+            <rect x="16" y="13" width="1" height="1" fill="#1a0a40"/>
+            <rect x="11" y="15" width="2" height="1" fill="#1a0a40"/>
+            <rect x="15" y="15" width="1" height="2" fill="#1a0a40"/>
+            <rect x="9" y="17" width="2" height="1" fill="#1a0a40"/>
+            <rect x="13" y="17" width="2" height="1" fill="#1a0a40"/>
+            <rect x="17" y="9" width="1" height="1" fill="#1a0a40"/>
+            <rect x="19" y="9" width="1" height="1" fill="#1a0a40"/>
+            <rect x="17" y="11" width="2" height="1" fill="#1a0a40"/>
+            <rect x="19" y="13" width="1" height="1" fill="#1a0a40"/>
+            <rect x="17" y="15" width="1" height="1" fill="#1a0a40"/>
+            <rect x="19" y="17" width="1" height="1" fill="#1a0a40"/>
+            <rect x="17" y="19" width="2" height="1" fill="#1a0a40"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen: intro ── -->
+  <div class="screen" data-screen="intro">
+    <div class="intro-top">
+      <button class="intro-back" onclick="showScreen('pin')" aria-label="Tilbake">
+        <hg-icon name="arrow-left-01" size="24"></hg-icon>
+      </button>
+      <span class="intro-title">Intro video</span>
+      <button class="intro-next" onclick="showScreen('question')">Neste</button>
+    </div>
+    <div class="intro-video">
+      <img src="/assets/img/article_img_hero.png" alt="Intro video" />
+      <div class="intro-video__play">
+        <button class="intro-video__btn" aria-label="Spill av">
+          <hg-icon name="play" size="32"></hg-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen: question ── -->
+  <div class="screen" data-screen="question">
+    <div class="question-top">
+      <div class="ks__players" id="q-answers-1"><hg-icon name="user-multiple-02" size="20"></hg-icon><span><span id="q-answers-count-1">0</span>/21</span></div>
+      <span class="q-screen-title">1 / 3</span>
+      <button class="ks__next" id="question-neste" onclick="showScreen('question-tf')">Neste</button>
+    </div>
+    <div class="question-layout">
+      <div class="question-text">
+        <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h1>
+      </div>
+      <div class="question-answers">
+        <button class="answer-tile answer-tile--a" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem</button>
+        <button class="answer-tile answer-tile--b answer-tile--correct" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem ipsum dolor sit amet</button>
+        <button class="answer-tile answer-tile--c" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod</button>
+        <button class="answer-tile answer-tile--d" onclick="revealAnswer()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Ipsum</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen: question-tf ── -->
+  <div class="screen" data-screen="question-tf">
+    <div class="question-top">
+      <div class="ks__players" id="q-answers-2"><hg-icon name="user-multiple-02" size="20"></hg-icon><span><span id="q-answers-count-2">0</span>/21</span></div>
+      <span class="q-screen-title">2 / 3</span>
+      <button class="ks__next" onclick="showScreen('question-img')">Neste</button>
+    </div>
+    <div class="question-layout">
+      <div class="question-text">
+        <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</h1>
+      </div>
+      <div class="question-answers tf-answers">
+        <button class="answer-tile answer-tile--b answer-tile--correct" onclick="revealTf()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Sant</button>
+        <button class="answer-tile answer-tile--d" onclick="revealTf()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Usant</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Screen: question-img ── -->
+  <div class="screen" data-screen="question-img">
+    <div class="img-top">
+      <div class="ks__players" id="q-answers-3"><hg-icon name="user-multiple-02" size="20"></hg-icon><span><span id="q-answers-count-3">0</span>/21</span></div>
+      <span class="q-screen-title">3 / 3</span>
+      <button class="ks__next" onclick="showScreen('question')">Neste</button>
+    </div>
+    <div class="img-layout">
+      <div class="img-left">
+        <div class="img-reveal-wrap" tabindex="0" role="button" aria-label="Avslør bilde">
+          <img src="/assets/img/img-4.png" alt="" />
+          <div class="img-grid" id="img-grid"></div>
+        </div>
+        <p class="img-hint">Foto: John Doe</p>
+      </div>
+      <div class="img-right">
+        <button class="answer-tile answer-tile--a answer-tile--correct" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Ada Hegerberg</button>
+        <button class="answer-tile answer-tile--b" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Andrine Hegerberg</button>
+        <button class="answer-tile answer-tile--c" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Guro Reiten</button>
+        <button class="answer-tile answer-tile--d" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Sophie Roman Haug</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="fullscreen-btn" id="fullscreen-btn" aria-label="Fullskjerm">
+    <hg-icon name="arrow-expand-01" size="24"></hg-icon>
+  </button>
+
+  <script>
+    function showScreen(name) {
+      document.querySelectorAll('.screen').forEach(function(s) {
+        s.classList.toggle('screen--active', s.dataset.screen === name);
+      });
+      document.body.classList.toggle('show-intro', name === 'intro');
+      document.body.classList.toggle('show-question', name === 'question');
+      document.body.classList.toggle('show-question-tf', name === 'question-tf');
+      document.body.classList.toggle('show-question-img', name === 'question-img');
+      document.querySelectorAll('.question-layout, .img-layout').forEach(function(l) { l.classList.remove('question--revealed'); });
+      if (name === 'question' || name === 'question-tf') {
+        document.querySelectorAll('[data-screen="' + name + '"] .answer-tile').forEach(function(tile) {
+          var len = tile.textContent.trim().length;
+          tile.classList.remove('answer-tile--text-lg', 'answer-tile--text-md', 'answer-tile--text-sm');
+          tile.classList.add(len <= 20 ? 'answer-tile--text-lg' : len <= 50 ? 'answer-tile--text-md' : 'answer-tile--text-sm');
+        });
+      }
+      if (name === 'question-img') {
+        buildImgGrid();
+        document.querySelectorAll('[data-screen="question-img"] .answer-tile').forEach(function(tile) {
+          var len = tile.textContent.trim().length;
+          tile.classList.remove('answer-tile--text-lg', 'answer-tile--text-md', 'answer-tile--text-sm');
+          tile.classList.add(len <= 20 ? 'answer-tile--text-lg' : len <= 50 ? 'answer-tile--text-md' : 'answer-tile--text-sm');
+        });
+      }
+      if (name === 'question' || name === 'question-tf' || name === 'question-img') {
+        var idx = name === 'question' ? 1 : name === 'question-tf' ? 2 : 3;
+        var countEl = document.getElementById('q-answers-count-' + idx);
+        if (countEl) {
+          countEl.textContent = '0';
+          var total = 21;
+          var duration = 5000;
+          setTimeout(function() {
+            var start = performance.now();
+            (function tick(now) {
+              var elapsed = now - start;
+              var progress = Math.min(elapsed / duration, 1);
+              var eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+              countEl.textContent = Math.round(eased * total);
+              if (progress < 1) requestAnimationFrame(tick);
+            })(start);
+          }, 2000);
+        }
+      }
+      if (name === 'pin') {
+        document.querySelector('.ks__content').classList.add('ks--loaded');
+        var pinCount = document.getElementById('pin-count');
+        if (pinCount) {
+          pinCount.textContent = '0';
+          setTimeout(function() {
+            var start = performance.now();
+            var duration = 5000;
+            var total = 21;
+            (function tick(now) {
+              var elapsed = now - start;
+              var progress = Math.min(elapsed / duration, 1);
+              var eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+              pinCount.textContent = Math.round(eased * total);
+              if (progress < 1) requestAnimationFrame(tick);
+            })(start);
+          }, 2000);
+        }
+      }
+      // Move focus to first focusable element on the new screen (keyboard only)
+      if (usingKeyboard) {
+        var screen = document.querySelector('[data-screen="' + name + '"]');
+        if (screen) {
+          var focusable = screen.querySelector('a[href], button:not([disabled]), [tabindex="0"]');
+          if (focusable) focusable.focus();
+        }
+      }
+    }
+
+    var cells = [];
+
+    function buildImgGrid() {
+      var grid = document.getElementById('img-grid');
+      grid.innerHTML = '';
+      var total = 64, batchSize = Math.round(total * 0.1);
+
+      // build all cells covered, shuffle order for random reveals
+      cells = [];
+      for (var i = 0; i < total; i++) {
+        var cell = document.createElement('div');
+        cell.className = 'img-cell';
+        grid.appendChild(cell);
+        cells.push(cell);
+      }
+      for (var i = cells.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = cells[i]; cells[i] = cells[j]; cells[j] = tmp;
+      }
+
+      // reveal first 10% immediately
+      cells.splice(0, batchSize).forEach(function(c) { c.classList.add('revealed'); });
+
+      // attach click to img-left: reveal next 10% each click
+      var imgLeft = document.querySelector('[data-screen="question-img"] .img-left');
+      var imgHint = imgLeft.querySelector('.img-hint');
+      var hintH = imgHint ? imgHint.offsetHeight + 8 : 0;
+      imgLeft.style.setProperty('--img-left-h', (imgLeft.offsetHeight - hintH) + 'px');
+      var imgWrap = document.querySelector('[data-screen="question-img"] .img-reveal-wrap');
+      function doReveal() {
+        if (!cells.length) return;
+        cells.splice(0, batchSize).forEach(function(c) { c.classList.add('revealed'); });
+      }
+      imgWrap.onclick = doReveal;
+      imgWrap.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doReveal(); }
+      });
+    }
+
+    function revealAnswer() {
+      document.querySelector('[data-screen="question"] .question-layout').classList.add('question--revealed');
+    }
+
+    function revealTf() {
+      document.querySelector('[data-screen="question-tf"] .question-layout').classList.add('question--revealed');
+    }
+
+    function revealImg() {
+      document.querySelector('[data-screen="question-img"] .img-layout').classList.add('question--revealed');
+    }
+
+    function revealImgAll() {
+      cells.splice(0).forEach(function(c) { c.classList.add('revealed'); });
+      revealImg();
+    }
+
+    showScreen('modul');
+
+    (function() {
+      var btn = document.getElementById('fullscreen-btn');
+      function updateIcon() {
+        var isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+        btn.innerHTML = isFs
+          ? '<hg-icon name="arrow-shrink-02" size="24"></hg-icon>'
+          : '<hg-icon name="arrow-expand-01" size="24"></hg-icon>';
+        btn.setAttribute('aria-label', isFs ? 'Avslutt fullskjerm' : 'Fullskjerm');
+      }
+      btn.addEventListener('click', function() {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          (document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen).call(document.documentElement);
+        } else {
+          (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        }
+      });
+      document.addEventListener('fullscreenchange', updateIcon);
+      document.addEventListener('webkitfullscreenchange', updateIcon);
+    })();
+
+    // Track keyboard vs mouse navigation
+    var usingKeyboard = false;
+    document.addEventListener('keydown', function(e) { if (e.key === 'Tab') usingKeyboard = true; });
+    document.addEventListener('mousedown', function() { usingKeyboard = false; });
+    document.addEventListener('pointerdown', function() { usingKeyboard = false; });
+
+    // Focus loop — wraps Tab from last focusable back to first
+    (function () {
+      var FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab') return;
+        var focusable = Array.from(document.querySelectorAll(FOCUSABLE)).filter(function (el) {
+          return el.offsetParent !== null || getComputedStyle(el).position === 'fixed';
+        });
+        if (focusable.length < 2) return;
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

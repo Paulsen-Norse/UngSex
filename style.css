@@ -503,6 +503,10 @@ hg-icon:not(:defined) {
   gap: 0;
 }
 
+@media (min-width: 810px) {
+  .hero-content { padding-inline: 0; }
+}
+
 .hero-content h1 { margin-bottom: 16px; }
 .hero-content p  { margin-bottom: 32px; }
 
@@ -729,7 +733,7 @@ hg-icon:not(:defined) {
 .footer__login {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   transition: color 0.15s;
 }
