@@ -509,6 +509,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      transition: opacity 0.5s ease;
+    }
+
+    .screen.presenting .question-top,
+    .screen.presenting .img-top {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .q-screen-title {
@@ -561,6 +568,23 @@
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 196px 196px;
       gap: 16px;
+      max-height: 700px;
+      overflow: hidden;
+      transition: max-height 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  opacity 0.6s ease;
+    }
+
+    .screen.presenting .question-answers {
+      max-height: 0;
+      opacity: 0;
+    }
+
+    .img-right {
+      transition: opacity 0.6s ease;
+    }
+
+    .screen.presenting .img-right {
+      opacity: 0;
     }
 
     .answer-tile {
@@ -635,6 +659,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      transition: opacity 0.5s ease;
     }
 
     .img-layout {
@@ -961,6 +986,12 @@
         });
       }
       if (name === 'question' || name === 'question-tf' || name === 'question-img') {
+        if (window._presentingTimer) clearTimeout(window._presentingTimer);
+        var presentingScreen = document.querySelector('[data-screen="' + name + '"]');
+        presentingScreen.classList.add('presenting');
+        window._presentingTimer = setTimeout(function() {
+          presentingScreen.classList.remove('presenting');
+        }, 3500);
         var idx = name === 'question' ? 1 : name === 'question-tf' ? 2 : 3;
         var countEl = document.getElementById('q-answers-count-' + idx);
         if (countEl) {
