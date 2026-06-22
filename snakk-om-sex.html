@@ -790,7 +790,7 @@
     <div class="ks__top">
       <div class="ks__players">
         <hg-icon name="user-multiple-02" size="20"></hg-icon>
-        <span>0</span>
+        <span id="pin-count">0</span>
       </div>
       <button class="ks__next" onclick="showScreen('intro')">Start</button>
     </div>
@@ -982,6 +982,22 @@
       }
       if (name === 'pin') {
         document.querySelector('.ks__content').classList.add('ks--loaded');
+        var pinCount = document.getElementById('pin-count');
+        if (pinCount) {
+          pinCount.textContent = '0';
+          setTimeout(function() {
+            var start = performance.now();
+            var duration = 5000;
+            var total = 21;
+            (function tick(now) {
+              var elapsed = now - start;
+              var progress = Math.min(elapsed / duration, 1);
+              var eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+              pinCount.textContent = Math.round(eased * total);
+              if (progress < 1) requestAnimationFrame(tick);
+            })(start);
+          }, 2000);
+        }
       }
       // Move focus to first focusable element on the new screen (keyboard only)
       if (usingKeyboard) {
