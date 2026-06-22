@@ -163,10 +163,10 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      height: 48px;
+      height: 40px;
       padding-inline: 16px;
       background: rgba(0,0,0,.4);
-      border-radius: 24px;
+      border-radius: 20px;
       font-size: 20px;
       font-weight: 500;
       color: #fff;
@@ -502,11 +502,24 @@
     .question-top {
       position: fixed;
       top: 24px;
+      left: 24px;
       right: 24px;
       z-index: 3;
       height: 48px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+    }
+
+    .q-screen-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-tone-3);
+      pointer-events: none;
+      white-space: nowrap;
     }
 
     .question-layout {
@@ -615,11 +628,13 @@
     .img-top {
       position: fixed;
       top: 24px;
+      left: 24px;
       right: 24px;
       z-index: 3;
       height: 48px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
     }
 
     .img-layout {
@@ -643,6 +658,7 @@
       min-width: 0;
       align-self: stretch;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
@@ -679,6 +695,15 @@
     }
     .img-cell.revealed { opacity: 0; }
 
+    .img-hint {
+      padding: 8px 16px 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-tone-2);
+      text-align: center;
+      flex-shrink: 0;
+    }
+
     .img-right {
       flex: 1;
       min-width: 0;
@@ -698,7 +723,7 @@
       .question-text    { padding-inline: 16px; }
       .question-answers { padding-inline: 16px; }
       .img-layout       { padding: 96px 16px 0; flex-direction: column; align-items: stretch; overflow-y: auto; }
-      .img-left         { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+      .img-left         { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
       .img-reveal-wrap  { max-height: none; }
       .img-reveal-wrap img { width: auto; height: auto; max-width: 100%; max-height: min(480px, var(--img-left-h, 480px)); }
       .img-right        { flex: none; padding-bottom: 16px; }
@@ -847,6 +872,8 @@
   <!-- ── Screen: question ── -->
   <div class="screen" data-screen="question">
     <div class="question-top">
+      <div class="ks__players" id="q-answers-1"><span id="q-answers-count-1">0</span> / 21</div>
+      <span class="q-screen-title">1 / 3</span>
       <button class="ks__next" id="question-neste" onclick="showScreen('question-tf')">Neste</button>
     </div>
     <div class="question-layout">
@@ -865,6 +892,8 @@
   <!-- ── Screen: question-tf ── -->
   <div class="screen" data-screen="question-tf">
     <div class="question-top">
+      <div class="ks__players" id="q-answers-2"><span id="q-answers-count-2">0</span> / 21</div>
+      <span class="q-screen-title">2 / 3</span>
       <button class="ks__next" onclick="showScreen('question-img')">Neste</button>
     </div>
     <div class="question-layout">
@@ -881,6 +910,8 @@
   <!-- ── Screen: question-img ── -->
   <div class="screen" data-screen="question-img">
     <div class="img-top">
+      <div class="ks__players" id="q-answers-3"><span id="q-answers-count-3">0</span> / 21</div>
+      <span class="q-screen-title">3 / 3</span>
       <button class="ks__next" onclick="showScreen('question')">Neste</button>
     </div>
     <div class="img-layout">
@@ -889,6 +920,7 @@
           <img src="assets/img/img-4.png" alt="" />
           <div class="img-grid" id="img-grid"></div>
         </div>
+        <p class="img-hint">Foto: John Doe</p>
       </div>
       <div class="img-right">
         <button class="answer-tile answer-tile--a answer-tile--correct" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Ada Hegerberg</button>
@@ -927,6 +959,23 @@
           tile.classList.remove('answer-tile--text-lg', 'answer-tile--text-md', 'answer-tile--text-sm');
           tile.classList.add(len <= 20 ? 'answer-tile--text-lg' : len <= 50 ? 'answer-tile--text-md' : 'answer-tile--text-sm');
         });
+      }
+      if (name === 'question' || name === 'question-tf' || name === 'question-img') {
+        var idx = name === 'question' ? 1 : name === 'question-tf' ? 2 : 3;
+        var countEl = document.getElementById('q-answers-count-' + idx);
+        if (countEl) {
+          countEl.textContent = '0';
+          var total = 21;
+          var duration = 5000;
+          var start = performance.now();
+          (function tick(now) {
+            var elapsed = now - start;
+            var progress = Math.min(elapsed / duration, 1);
+            var eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+            countEl.textContent = Math.round(eased * total);
+            if (progress < 1) requestAnimationFrame(tick);
+          })(start);
+        }
       }
       if (name === 'pin') {
         document.querySelector('.ks__content').classList.add('ks--loaded');
