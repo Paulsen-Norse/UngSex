@@ -62,7 +62,13 @@
     ════════════════════════════ */
     .modul {
       position: fixed;
-      inset: 0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -106,6 +112,7 @@
       gap: 4px;
       width: 196px;
       height: 96px;
+      padding-bottom: 8px;
       border: none;
       border-radius: 32px;
       background: var(--color-primary);
@@ -116,7 +123,7 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       cursor: pointer;
-      box-shadow: 0 8px 0 #5C24B3;
+      box-shadow: inset 0 -8px 0 #5C24B3;
       transform: translateY(0);
       transition: transform 0.08s ease, box-shadow 0.08s ease, background-image 0.15s;
       -webkit-user-select: none;
@@ -124,19 +131,19 @@
     }
     .big-btn:hover {
       background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
-      box-shadow: 0 8px 0 #4A1A9A;
+      box-shadow: inset 0 -8px 0 #4A1A9A;
     }
     .big-btn:active {
       transform: translateY(6px);
-      box-shadow: 0 2px 0 #5C24B3;
+      box-shadow: inset 0 -2px 0 #5C24B3;
     }
 
     .big-btn--hjemme {
       background: #009386;
-      box-shadow: 0 8px 0 #006B62;
+      box-shadow: inset 0 -8px 0 #006B62;
     }
-    .big-btn--hjemme:hover { box-shadow: 0 8px 0 #005550; }
-    .big-btn--hjemme:active { box-shadow: 0 2px 0 #006B62; }
+    .big-btn--hjemme:hover { box-shadow: inset 0 -8px 0 #005550; }
+    .big-btn--hjemme:active { box-shadow: inset 0 -2px 0 #006B62; }
 
     /* ════════════════════════════
        SCREEN: pin
@@ -169,12 +176,13 @@
     .ks__next {
       height: 44px;
       padding-inline: 24px;
+      padding-bottom: 4px;
       background: var(--color-primary);
       border: none;
       border-radius: 20px;
       position: relative;
-      top: -2px;
-      box-shadow: 0 4px 0 #5C24B3;
+      top: 0;
+      box-shadow: inset 0 -4px 0 #5C24B3;
       font-family: inherit;
       font-size: 18px;
       font-weight: 700;
@@ -187,16 +195,22 @@
     }
     .ks__next:hover {
       background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
-      box-shadow: 0 4px 0 #4A1A9A;
+      box-shadow: inset 0 -4px 0 #4A1A9A;
     }
     .ks__next:active {
       transform: translateY(2px);
-      box-shadow: 0 2px 0 #5C24B3;
+      box-shadow: inset 0 -2px 0 #5C24B3;
     }
 
     .ks__content {
       position: fixed;
-      inset: 0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
       z-index: 2;
       display: flex;
       flex-direction: column;
@@ -394,16 +408,18 @@
       user-select: none;
     }
     .fullscreen-btn:hover { transform: scale(1.08); }
+    @media (max-width: 810px) { .fullscreen-btn { display: none; } }
 
     .intro-next {
       height: 44px;
       padding-inline: 24px;
+      padding-bottom: 4px;
       background: var(--color-primary);
       border: none;
       border-radius: 20px;
       position: relative;
-      top: -2px;
-      box-shadow: 0 4px 0 #5C24B3;
+      top: 0;
+      box-shadow: inset 0 -4px 0 #5C24B3;
       font-family: inherit;
       font-size: 18px;
       font-weight: 700;
@@ -416,16 +432,19 @@
     }
     .intro-next:hover {
       background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08));
-      box-shadow: 0 4px 0 #4A1A9A;
+      box-shadow: inset 0 -4px 0 #4A1A9A;
     }
     .intro-next:active {
       transform: translateY(2px);
-      box-shadow: 0 2px 0 #5C24B3;
+      box-shadow: inset 0 -2px 0 #5C24B3;
     }
 
     .intro-video {
       position: fixed;
-      inset: 96px;
+      top: 96px;
+      bottom: 96px;
+      left: max(96px, calc(50% - 624px));
+      right: max(96px, calc(50% - 624px));
       z-index: 2;
       border-radius: 64px;
       overflow: hidden;
@@ -435,11 +454,15 @@
       outline: 1px solid rgba(0,0,0,.08);
     }
 
+    .intro-video {
+      background: #000;
+    }
+
     .intro-video video,
     .intro-video img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
     }
 
@@ -468,6 +491,11 @@
       transition: transform .4s cubic-bezier(.25,.46,.45,.94);
     }
     .intro-video__btn:hover { transform: scale(1.08); }
+    .intro-video__btn:focus-visible { outline-color: #fff; }
+    @media (max-width: 809px) {
+      .intro-video__btn { width: 64px; height: 64px; }
+      .intro-video__btn hg-icon svg { width: 24px !important; height: 24px !important; }
+    }
 
     /* ════════════════════════════
        SCREEN: question
@@ -477,11 +505,20 @@
       top: 24px;
       right: 24px;
       z-index: 3;
+      height: 48px;
+      display: flex;
+      align-items: center;
     }
 
     .question-layout {
       position: fixed;
-      inset: 0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
       z-index: 2;
       display: flex;
       flex-direction: column;
@@ -493,7 +530,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 96px 48px 64px;
+      padding: 96px 32px 64px;
     }
 
     .question-text h2 {
@@ -507,7 +544,7 @@
 
     .question-answers {
       flex-shrink: 0;
-      padding: 0 48px 96px;
+      padding: 0 32px 96px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 196px 196px;
@@ -582,15 +619,24 @@
       top: 24px;
       right: 24px;
       z-index: 3;
+      height: 48px;
+      display: flex;
+      align-items: center;
     }
 
     .img-layout {
       position: fixed;
-      inset: 0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
       z-index: 2;
       display: flex;
       align-items: center;
-      padding: 96px 48px 96px;
+      padding: 96px 32px 96px;
       gap: 32px;
     }
 
@@ -649,14 +695,10 @@
       max-height: none;
     }
 
-    @media (min-width: 811px) and (max-width: 1199px) {
-      .question-text    { padding-inline: 64px; }
-      .question-answers { padding-inline: 64px; }
-    }
-
-    @media (min-width: 1200px) {
-      .question-text    { padding-inline: 96px; }
-      .question-answers { padding-inline: 96px; }
+    @media (max-width: 810px) {
+      .question-text    { padding-inline: 16px; }
+      .question-answers { padding-inline: 16px; }
+      .img-layout       { padding-inline: 16px; }
     }
 
     @media (max-width: 810px) {
@@ -831,16 +873,16 @@
     </div>
     <div class="img-layout">
       <div class="img-left">
-        <div class="img-reveal-wrap">
+        <div class="img-reveal-wrap" tabindex="0" role="button" aria-label="Avslør bilde">
           <img src="assets/img/img-4.png" alt="" />
           <div class="img-grid" id="img-grid"></div>
         </div>
       </div>
       <div class="img-right">
-        <button class="answer-tile answer-tile--a answer-tile--correct" onclick="revealImg()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Ada Hegerberg</button>
-        <button class="answer-tile answer-tile--b" onclick="revealImg()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Andrine Hegerberg</button>
-        <button class="answer-tile answer-tile--c" onclick="revealImg()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Guro Reiten</button>
-        <button class="answer-tile answer-tile--d" onclick="revealImg()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Sophie Roman Haug</button>
+        <button class="answer-tile answer-tile--a answer-tile--correct" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Ada Hegerberg</button>
+        <button class="answer-tile answer-tile--b" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Andrine Hegerberg</button>
+        <button class="answer-tile answer-tile--c" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Guro Reiten</button>
+        <button class="answer-tile answer-tile--d" onclick="revealImgAll()"><span class="answer-check"><hg-icon name="checkmark-circle-02" size="32"></hg-icon></span>Sophie Roman Haug</button>
       </div>
     </div>
   </div>
@@ -877,7 +919,17 @@
       if (name === 'pin') {
         document.querySelector('.ks__content').classList.add('ks--loaded');
       }
+      // Move focus to first focusable element on the new screen (keyboard only)
+      if (usingKeyboard) {
+        var screen = document.querySelector('[data-screen="' + name + '"]');
+        if (screen) {
+          var focusable = screen.querySelector('a[href], button:not([disabled]), [tabindex="0"]');
+          if (focusable) focusable.focus();
+        }
+      }
     }
+
+    var cells = [];
 
     function buildImgGrid() {
       var grid = document.getElementById('img-grid');
@@ -885,7 +937,7 @@
       var total = 64, batchSize = Math.round(total * 0.1);
 
       // build all cells covered, shuffle order for random reveals
-      var cells = [];
+      cells = [];
       for (var i = 0; i < total; i++) {
         var cell = document.createElement('div');
         cell.className = 'img-cell';
@@ -902,10 +954,15 @@
 
       // attach click to img-left: reveal next 10% each click
       var imgLeft = document.querySelector('[data-screen="question-img"] .img-left');
-      imgLeft.onclick = function() {
+      var imgWrap = document.querySelector('[data-screen="question-img"] .img-reveal-wrap');
+      function doReveal() {
         if (!cells.length) return;
         cells.splice(0, batchSize).forEach(function(c) { c.classList.add('revealed'); });
-      };
+      }
+      imgLeft.onclick = doReveal;
+      imgWrap.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doReveal(); }
+      });
     }
 
     function revealAnswer() {
@@ -918,6 +975,11 @@
 
     function revealImg() {
       document.querySelector('[data-screen="question-img"] .img-layout').classList.add('question--revealed');
+    }
+
+    function revealImgAll() {
+      cells.splice(0).forEach(function(c) { c.classList.add('revealed'); });
+      revealImg();
     }
 
     showScreen('modul');
@@ -940,6 +1002,30 @@
       });
       document.addEventListener('fullscreenchange', updateIcon);
       document.addEventListener('webkitfullscreenchange', updateIcon);
+    })();
+
+    // Track keyboard vs mouse navigation
+    var usingKeyboard = false;
+    document.addEventListener('keydown', function(e) { if (e.key === 'Tab') usingKeyboard = true; });
+    document.addEventListener('mousedown', function() { usingKeyboard = false; });
+    document.addEventListener('pointerdown', function() { usingKeyboard = false; });
+
+    // Focus loop — wraps Tab from last focusable back to first
+    (function () {
+      var FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab') return;
+        var focusable = Array.from(document.querySelectorAll(FOCUSABLE)).filter(function (el) {
+          return el.offsetParent !== null || getComputedStyle(el).position === 'fixed';
+        });
+        if (focusable.length < 2) return;
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      });
     })();
   </script>
 </body>
