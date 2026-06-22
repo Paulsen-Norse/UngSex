@@ -86,8 +86,46 @@ function initArrowIcons() {
   });
 }
 
+// ── Skip to content link ──────────────────────────────────────────────────────
+function initSkipLink() {
+  var skip = document.createElement('a');
+  skip.className = 'skip-link';
+  skip.href = '#main-content';
+  skip.textContent = 'Hopp til innhold';
+  skip.addEventListener('click', function (e) { handleSkip(e); });
+  skip.addEventListener('keydown', function (e) { if (e.key === 'Enter') handleSkip(e); });
+  document.body.prepend(skip);
+
+  function handleSkip(e) {
+    e.preventDefault();
+    var main = document.getElementById('main-content');
+    if (!main) return;
+    var first = main.querySelector('a[href], button:not([disabled]), [tabindex="0"]');
+    if (first) { first.focus(); } else { main.focus(); }
+  }
+}
+
+// ── Page-wide focus loop (wraps Tab from last element back to first) ───────────
+function initFocusLoop() {
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    var focusable = Array.from(document.querySelectorAll(FOCUSABLE)).filter(function (el) {
+      return el.offsetParent !== null;
+    });
+    if (focusable.length < 2) return;
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   initNavToggle();
   initScrollReveal('.pg-anim');
   initArrowIcons();
+  initSkipLink();
+  initFocusLoop();
 });
